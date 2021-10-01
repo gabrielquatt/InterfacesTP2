@@ -1,0 +1,112 @@
+*{
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+:root {
+  --bg: rgb(165, 165, 165);
+
+}
+
+body {
+  /* == Background == */
+  background-color: var(--bg);
+}
+
+.parent{
+ /* == Grid == */
+ display: grid;
+ grid-template-columns: repeat(8, 1fr);
+ grid-template-rows: repeat(8, 1.5fr);
+ grid-column-gap: 0px;
+ grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 2 / 3/ 4;
+}
+.div2 {
+  grid-area: 1 / 4 / 3 / 6;
+}
+.div3 {
+  grid-area: 1 / 6 / 3 / 8;
+}
+.div4 {
+  grid-area: 3 / 2 / 8 / 8;
+}
+.div5 {
+  grid-area: 8 / 4 / 9 / 6;
+}
+
+/*========= estilo del Menu =========*/
+
+.div_menu {
+    /* == menu fixed == */
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    top: 25%;
+    left: 50%;
+    margin-top: -100px; /* Negative half of height. */
+    margin-left: -250px; /* Negative half of width. */
+    
+    background-color: white;
+    /* background-image: -webkit-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    background-image: -moz-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    background-image: -o-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%); */
+    
+    border-radius: 5px;
+    border:  2px solid rgb(119, 131, 231);
+    box-shadow: 5px 10px 8px #2c2c2c;
+    transition: 0.2s;
+}
+.div_menu:hover{
+    box-shadow: 8px 13px 10px #093a42;
+}
+
+
+label,h1,p,h2{
+    color: rgb(0, 0, 0);
+}
+
+input{
+    border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+    font-size: medium;
+    text-align: center;
+    padding: 6px;
+    border-radius: 2px;
+    box-shadow: 0 2px rgb(31, 31, 31);
+}
+
+
+.success{
+    background-color: #28B463 ; /* Green */
+}
+.success:hover {background-color: #239B56}
+
+.warnnig{
+    background-color: #F1C40F; 
+}
+.warnnig:hover{
+    background-color: #D4AC0D; 
+}
+
+/**
+* Estilo no finales solo para orientacion de la pagina 
+*/
+
+.div4{
+    background-color: white;
+}
+
+.div1,.div2,.div3,.div4{
+    border:  2px solid rgb(119, 131, 231);
+}
