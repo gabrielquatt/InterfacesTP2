@@ -16,6 +16,10 @@ class Player {
     return this.coin;
   }
 
+  getName(){
+    return this.name;
+  }
+
   /**
    * Funcion utilizada para verificar que los jugadores respeten su turno.
    * 

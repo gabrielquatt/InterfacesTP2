@@ -3,13 +3,35 @@
 const url_menu = "pages/menu.html";
 const url_game = "pages/game.html";
 
-let payer1;
-let payer2;
+let player1;
+let player2;
+let numToWin;
 let game = new Game();
+let canvas;
 
 // cargar pagina menu
 load_page(url_menu);
 
+/**
+ * TODO añadir opciones al manu del juego
+ */
+function iniciarJuego() {
+  let name_1 = document.getElementById("player1").value;
+  let name_2 = document.getElementById("player2").value;
+  numToWin = document.getElementById("type_Game").value;
+
+  // TODO seleccionar ficha como imagen
+  player1 = new Player(1, name_1, "X");
+  player2 = new Player(2, name_2, "O");
+
+  load_page(url_game);
+}
+
+/*
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+*/
 function load_page(page) {
   let content = document.getElementById("content");
   fetch(page)
@@ -25,6 +47,13 @@ function load_page(page) {
           }
         });
       } else {
+        canvas = document.getElementById("canvas");
+
+        document.getElementById("info_p1").innerHTML = player1.getName();
+        document.getElementById("info_p2").innerHTML = player2.getName();
+        game.init(player1, player2, numToWin, canvas);
+
+        document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reset").addEventListener("click", () => {
           load_page(url_menu);
         });
@@ -34,22 +63,6 @@ function load_page(page) {
         });
       }
     });
-}
-
-/**
- * TODO añadir opciones al manu del juego 
- */
-function iniciarJuego() {
-  let name_1 = document.getElementById("player1").value;
-  let name_2 = document.getElementById("player2").value;
-
-  // TODO typeGame tiene que ser valor numerico
-  let typeGame = document.getElementById("type_Game").value;
-
-  // TODO seleccionar ficha como imagen
-  let p1 = new Player(1, name_1, "X");
-  let p2 = new Player(2, name_2, "O");
-  game.init(p1, p2, typeGame);
 }
 
 function verificarDatos() {

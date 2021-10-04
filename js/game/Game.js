@@ -4,8 +4,17 @@ class Game {
     this.started = false;
     this.p1;
     this.p2;
-    this.playerTurn;
+    this.playerTurn = null;
+    this.canvas = null;
     this.table = new Table();
+  }
+  
+  isStarted() {
+    return this.started;
+  }
+
+  getPlayerTurn() {
+    return this.playerTurn.getName();
   }
 
   /**
@@ -14,12 +23,13 @@ class Game {
    * @param { Player } p2 player 2
    * @param { Number } size numero de fichas en linea necesarias para ganar
    */
-  init(p1, p2, size) {
+  init(p1, p2, size, canvas) {
     this.started = true;
     this.p1 = p1;
     this.p2 = p2;
     this.playerTurn = p1;
-    this.table.init(size);
+    this.canvas = canvas;
+    this.table.init(size, canvas);
   }
 
   play(player, col) {
@@ -40,6 +50,7 @@ class Game {
     } else {
       this.changePlayerTurn(this.playerTurn);
     }
+    return true;
   }
 
   changePlayerTurn(p) {

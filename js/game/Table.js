@@ -6,15 +6,17 @@ class Table {
     this.numToWin = 0;
     this.lastRow = 0;
     this.lastCol = 0;
+    this.canvas = null;
   }
 
-  init(numToWin) {
+  init(numToWin, canvas) {
     this.COLS = numToWin * 2;
     this.ROWS = numToWin * 2;
     this.numToWin = numToWin;
     this.lastRow = null;
     this.lastCol = null;
     this.loadTable();
+    this.canvas = canvas;
   }
 
   /**
