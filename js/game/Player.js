@@ -1,19 +1,11 @@
 class Player {
-  constructor(id, name, coin) {
+  constructor(id, name) {
     this.id = id;
     this.name = name;
-    this.coin = coin;
   }
 
   getId(){
     return this.id;
-  }
-
-  /**
-   * @returns Ficha del jugador (path a la imagen)
-   */
-  getCoin() {
-    return this.coin;
   }
 
   getName(){

@@ -7,9 +7,17 @@ class Table {
     this.lastRow = 0;
     this.lastCol = 0;
     this.canvas = null;
+    this.ctx = null;
+    this.coin = null;
   }
 
-  init(numToWin, canvas) {
+  drawTable(){
+    // TODO dibujar y guardar fichas default
+    
+
+  }
+
+  init(numToWin, canvas, ctx) {
     this.COLS = numToWin * 2;
     this.ROWS = numToWin * 2;
     this.numToWin = numToWin;
@@ -17,6 +25,7 @@ class Table {
     this.lastCol = null;
     this.loadTable();
     this.canvas = canvas;
+    this.ctx = ctx;
   }
 
   /**

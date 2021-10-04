@@ -7,7 +7,6 @@ let player1;
 let player2;
 let numToWin;
 let game = new Game();
-let canvas;
 
 // cargar pagina menu
 load_page(url_menu);
@@ -21,8 +20,8 @@ function iniciarJuego() {
   numToWin = document.getElementById("type_Game").value;
 
   // TODO seleccionar ficha como imagen
-  player1 = new Player(1, name_1, "X");
-  player2 = new Player(2, name_2, "O");
+  player1 = new Player(1, name_1);
+  player2 = new Player(2, name_2);
 
   load_page(url_game);
 }
@@ -47,11 +46,10 @@ function load_page(page) {
           }
         });
       } else {
-        canvas = document.getElementById("canvas");
 
         document.getElementById("info_p1").innerHTML = player1.getName();
         document.getElementById("info_p2").innerHTML = player2.getName();
-        game.init(player1, player2, numToWin, canvas);
+        game.init(player1, player2, numToWin);
 
         document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reset").addEventListener("click", () => {
@@ -69,7 +67,6 @@ function verificarDatos() {
   let p1 = document.getElementById("player1").value;
   let p2 = document.getElementById("player2").value;
   let typeGame = document.getElementById("type_Game").value;
-
   if (!p1 || !p2 || !typeGame) alert1();
   else return true;
 }
