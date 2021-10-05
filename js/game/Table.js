@@ -1,9 +1,9 @@
 class Table {
   constructor() {
-    this.COLS = 0;
-    this.ROWS = 0;
+    this.COLS = 7;
+    this.ROWS = 6;
     this.tab;
-    this.numToWin = 0;
+    this.numToWin = 4;
     this.lastRow = 0;
     this.lastCol = 0;
     this.canvas = null;
@@ -11,29 +11,56 @@ class Table {
     this.coin = null;
   }
 
-  drawTable(){
-    // TODO dibujar y guardar fichas default
-    
+  /**
+   *
+   * @param {*} tam tamaño del tablero
+   */
+  init(tam, canvas, ctx) {
+    this.ROWS = parseInt(tam);
 
-  }
+    if (tam == 7) this.COLS = 9;
 
-  init(numToWin, canvas, ctx) {
-    this.COLS = numToWin * 2;
-    this.ROWS = numToWin * 2;
-    this.numToWin = numToWin;
+    if (tam == 8) this.COLS = 11;
+
     this.lastRow = null;
     this.lastCol = null;
-    this.loadTable();
     this.canvas = canvas;
     this.ctx = ctx;
+    this.loadTable();
+  }
+
+  drawTable() {
+    let prop = this.tab[0][0].getRadio()+1;
+
+    let y = this.canvas.height * 0.1;
+    let x = this.canvas.width * 0.1;
+
+    let width = prop * this.COLS;
+    
+
+    y = y + prop;
+    this.tab.forEach((row) => {
+    
+      x = width ;
+      row.forEach((coin) => {
+        coin.setPosition(x, y);
+        coin.draw();
+        x = x + prop * 2;
+      });
+      y = y + prop * 2;
+    });
   }
 
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
   loadTable() {
+    let radio = 20;
     this.tab = Array.from(Array(this.ROWS), () =>
-      Array.from(Array(this.COLS), () => null)
+      Array.from(
+        Array(this.COLS),
+        () => new Coin(0, 0, "blue", radio, this.canvas, 0)
+      )
     );
   }
 
@@ -52,7 +79,7 @@ class Table {
    * @returns si la columna es valida para jugar la ficha
    */
   validColumn(col) {
-    return col > -1 && col < this.COLS && this.t[0][col] === " ";
+    return col > -1 && col < this.COLS && this.t[0][col] === null;
   }
 
   insertCoin(coin, col) {
@@ -66,7 +93,7 @@ class Table {
     this.lastRow = r;
     this.lastCol = col;
 
-    return r;
+    return true;
   }
 
   isWinner() {
@@ -88,7 +115,7 @@ class Table {
     }
     return cont >= this.numToWin;
   }
-  
+
   vertical() {
     let cont = 1;
     let r = this.lastRow;

@@ -79,46 +79,53 @@ class Game {
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
 
     this.table.init(size, canvas, this.ctx);
-    this.showCoins((size * size) / 2);
+    this.table.drawTable();
+    this.showCoins(size);
   }
 
   showCoins(n) {
+    let posY = this.canvas.height - 40;
+    let posX = 40;
+    let pos_X = this.canvas.width - posX;
+    
+    n = (n * n) / 2;
+    let indice = (this.canvas.height * 0.7) / n;
+    let radio = 20;
+    
     for (let i = 0; i < n; i++) {
-      let posX = Math.random() * (this.canvas.width * 0.15) + 30;
-      let posY = Math.random() * this.canvas.height * 0.6 + 25;
-      posY = this.canvas.height - posY;
-
-      let c1 = new Coin(posX, posY, "red", 30, this.canvas, 1);
-
-      posX = this.canvas.width - posX;
-      let c2 = new Coin(posX, posY, "green", 30, this.canvas, 2);
-
+      let d = Math.random() * 5;
+      d = Math.random() > 0.5 ? d : d * -1;
+      let c1 = new Coin(posX + d, posY, "red", radio, this.canvas, 1);
+      let c2 = new Coin(pos_X + d, posY, "green", radio, this.canvas, 2);
       c1.draw();
       c2.draw();
-
       this.coins.push(c1);
       this.coins.push(c2);
+      posY = posY - indice;
     }
   }
 
   play(player, col) {
     if (player === undefined || col === undefined) return;
     if (!player.equals(this.playerTurn)) return;
-    let row = this.table.insertCoin(this.playerTurn.getCoin(), col);
-    if (!row) return;
-    // aca se debe mostrar tabla con la ficha colocada en [row][col]
+
+    let ok = this.table.insertCoin(this.playerTurn.getCoin(), col);
+    if (!ok) return;
+
+    // this.table.drawTable();
+
     if (this.table.isWinner()) {
       this.winner = true;
       return this.final("gano: " + this.playerTurn);
     } else if (!this.table.hasEmptyCell()) {
       return this.final("empate");
     } else {
-      this.changePlayerTurn(this.playerTurn);
+      this.changePlayerTurn();
     }
     return true;
   }
 
-  changePlayerTurn(p) {
+  changePlayerTurn() {
     this.playerTurn = p.equals(this.p1) ? this.p2 : this.p1;
   }
 

@@ -55,10 +55,10 @@ function load_page(page) {
         document.getElementById("btn_reset").addEventListener("click", () => {
           load_page(url_menu);
         });
-        // btn aux solo de prueba para alert de victoria
-        document.getElementById("aux").addEventListener("click", () => {
-          alert2(); // + nombre del ganador
-        });
+        // // btn aux solo de prueba para alert de victoria
+        // document.getElementById("aux").addEventListener("click", () => {
+        //   alert2(); // + nombre del ganador
+        // });
       }
     });
 }

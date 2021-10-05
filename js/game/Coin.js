@@ -7,6 +7,7 @@ class Coin {
     this.ctx = canvas.getContext("2d");
     this.color = color;
     this.free = true;
+    this.id = id;
   }
 
   draw() {
@@ -16,6 +17,10 @@ class Coin {
     this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
     this.ctx.fill();
     this.ctx.closePath();
+  }
+
+  getRadio(){
+    return this.radio;
   }
 
   setPosition(x, y) {
