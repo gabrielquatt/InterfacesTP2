@@ -59,7 +59,7 @@ class Table {
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(
         Array(this.COLS),
-        () => new Coin(0, 0, "blue", radio, this.canvas, 0)
+        () => new Coin(0, 0, "white", radio, this.canvas, 0)
       )
     );
   }

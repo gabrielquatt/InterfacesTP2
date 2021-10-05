@@ -77,6 +77,7 @@ class Game {
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
+    
     this.table.init(size, canvas, this.ctx);
 
     this.table.drawTable();
@@ -95,8 +96,8 @@ class Game {
     for (let i = 0; i < n; i++) {
       let d = Math.random() * 5;
       d = Math.random() > 0.5 ? d : d * -1;
-      let c1 = new Coin(posX + d, posY, "red", radio, this.canvas, 1);
-      let c2 = new Coin(pos_X + d, posY, "green", radio, this.canvas, 2);
+      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
+      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
 
       c1.draw();
       c2.draw();
