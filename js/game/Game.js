@@ -67,7 +67,7 @@ class Game {
    * @param { Player } p2 player 2
    * @param { Number } size numero de fichas en linea necesarias para ganar
    */
-  init(p1, p2, size) {
+  init(p1, p2, size,c1,c2) {
     this.started = true;
     this.p1 = p1;
     this.p2 = p2;
@@ -77,13 +77,13 @@ class Game {
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
-
     this.table.init(size, canvas, this.ctx);
+
     this.table.drawTable();
-    this.showCoins(size);
+    this.showCoins(size,c1,c2);
   }
 
-  showCoins(n) {
+  showCoins(n,cP1,cP2) {
     let posY = this.canvas.height - 40;
     let posX = 40;
     let pos_X = this.canvas.width - posX;
@@ -97,6 +97,7 @@ class Game {
       d = Math.random() > 0.5 ? d : d * -1;
       let c1 = new Coin(posX + d, posY, "red", radio, this.canvas, 1);
       let c2 = new Coin(pos_X + d, posY, "green", radio, this.canvas, 2);
+
       c1.draw();
       c2.draw();
       this.coins.push(c1);
