@@ -16,13 +16,20 @@ class Coin {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
     this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
     this.setImgValue(this.color);
+
+    this.image.onload = () => {
+      this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
+    }
+
     this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
+
+
     this.ctx.fill();
     this.ctx.closePath();
   }
 
-  setImgValue(color){
-    this.image.src = "./img/"+color+".png";
+  setImgValue(color) {
+    this.image.src = "./img/" + color + ".png";
   }
 
   setPosition(x, y) {

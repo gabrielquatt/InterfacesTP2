@@ -92,6 +92,7 @@ class Game {
       posX = this.canvas.width - posX;
       let c2 = new Coin(posX, posY, cP2, 30, this.canvas, 2);
 
+      
       c1.draw();
       c2.draw();
 
