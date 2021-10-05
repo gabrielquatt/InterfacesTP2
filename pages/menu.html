@@ -4,17 +4,40 @@
     <div class="tittle">
         <h1>4 En Linea</h1>
         <div>
-        <label for="player1">Nombre Jugador 1  "Azul"</label>
+        <label for="player1">Nombre Jugador 1 </label>
             <input type="name" id="player1" placeholder="Player 1" value="facu">
 
         </div>
         <div>
-            <label for="player2">Nombre Jugador 2  "Rojo"</label>
+            <label for="player2">Nombre Jugador 2</label>
             <input type="name" id="player2" placeholder="Player 2" value="gabi">
         </div>
-
+        <p></p>
         <div>
-         
+            <label for="colorP1">Color Ficha Jugador 1</label>
+            <select name="select" id="colorP1" class="section"  onchange="colorChangeP1();">
+                <option value="blue" selected>Azul</option>
+                <option value="red" >Rojo</option>
+                <option value="violet">Violeta</option>
+                <option value="yellow">Amarillo</option>
+                <option value="orange">Naranja</option>
+              </select>
+              <span class="p1" id="p1">P1</span>
+        </div>
+        <div>
+            <label for="colorP2">Color Ficha Jugador 2</label>
+            <select name="select" id="colorP2"  onchange="colorChangeP2();">
+                <option  value="blue">Azul</option>
+                <option  value="red" selected>Rojo</option>
+                <option  value="violet">Violeta</option>
+                <option  value="yellow">Amarillo</option>
+                <option  value="orange">Naranja</option>
+            </select>
+            <span class="p2" id="p2">P2</span>
+        </div>
+
+        <p></p>
+        <div>
             <label for="type_Game">Tamaño Tablero</label>
             <select name="select" id="type_Game">
                 <option value="4" selected>tablero 8x8</option>
@@ -22,7 +45,16 @@
                 <option value="value3">tablero 12x12</option>
               </select>
         </div>
-
+        <p></p>
+        <div>
+            <label for="time_game">Tiempo de Partida</label>
+            <select name="select" id="time_game">
+                <option value="03" selected>Rapida: 3 minutos</option>
+                <option value="05" >Normal: 5 minutos</option>
+                <option value="10">Lenta: 10 minutos</option>
+              </select>
+        </div>
+        <p></p>
         <div>
             <button id="btn_start" class="success">Comenzar!</button>
         </div>

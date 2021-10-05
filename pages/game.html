@@ -1,30 +1,28 @@
 <div class="parent">
     <div class="div1">
         <h2>Jugadores: </h2>
-        <p >player 1 "Azul" = <span id="info_p1"></span></p>
-        
-        <p >player 2 "Rojo" = <span id="info_p2"></span></p>
+        <p>player 1 = <span id="info_p1"></span></p>
+
+        <p>player 2 = <span id="info_p2"></span></p>
         <!-- Info = (Nombre Juego + player + color ficha + reglas)-->
     </div>
     <div class="div2">
         <h2>Turno Jugador: <span id="turn_player"></span></h2><!-- Info Turno / Ganador -->
 
         <button id="aux" type="button">test alert winner</button>
+        <!-- Button Reset -->
+        <button id="btn_reset" class="warnnig">Resetear</button>
     </div>
     <div class="div3">
         <!-- Info Grupo -->
         <div>
-            <h2>Integrantes Grupo:</h2>
-            <p>Facundo Arana</p>
-            <p>Gabriel Quattrini</p>
-          </div>
+            <h2 id="time_game"></h2>
+            <div id="timer"><p>00:00</p></div>
+        </div>
     </div>
     <div class="div4">
         <!-- Button Canvas -->
-        <canvas id="canvas" width="1000" height="370"></canvas>
+        <canvas id="canvas" width="1300" height="458"></canvas>
     </div>
-    <div class="div5">
-        <!-- Button Reset -->
-        <button id="btn_reset" class="warnnig">Resetear</button>
-    </div>
+
 </div>

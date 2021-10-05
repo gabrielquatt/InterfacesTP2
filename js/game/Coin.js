@@ -7,15 +7,22 @@ class Coin {
     this.ctx = canvas.getContext("2d");
     this.color = color;
     this.free = true;
+    this.image = new Image();
   }
 
   draw() {
     if (!this.free) return;
     this.ctx.beginPath();
-    this.ctx.fillStyle = this.color;
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
     this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
+    this.setImgValue(this.color);
+    this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
     this.ctx.fill();
     this.ctx.closePath();
+  }
+
+  setImgValue(color){
+    this.image.src = "./img/"+color+".png";
   }
 
   setPosition(x, y) {
