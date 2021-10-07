@@ -3,7 +3,7 @@ class Table {
     this.COLS = 7;
     this.ROWS = 6;
     this.tab;
-    this.numToWin = 4;
+    this.numToWin = 0;
     this.lastRow = 0;
     this.lastCol = 0;
     this.canvas = null;
@@ -16,11 +16,21 @@ class Table {
    * @param {*} tam tamaño del tablero
    */
   init(tam, canvas, ctx) {
-    this.ROWS = parseInt(tam);
+    this.numToWin = parseInt(tam);
+    if(tam != 4){
+      if (tam == 5){
+        this.COLS = 9;
+        this.ROWS = 7;
+      } 
+  
+      if (tam == 6){
+        this.COLS = 11;
+        this.ROWS = 9;
+      } 
+    }
+    this.ROWS = parseInt(tam) + 2;
+    this.numToWin = parseInt(tam);
 
-    if (tam == 7) this.COLS = 9;
-
-    if (tam == 8) this.COLS = 11;
 
     this.lastRow = null;
     this.lastCol = null;
@@ -30,17 +40,15 @@ class Table {
   }
 
   drawTable() {
-    let prop = this.tab[0][0].getRadio()+1;
+    let prop = this.tab[0][0].getRadio() + 5;
 
     let y = this.canvas.height * 0.1;
-    
+
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
-    
 
     y = y + prop;
     this.tab.forEach((row) => {
-    
       x = this.canvas.width / 2 - width;
       row.forEach((coin) => {
         coin.setPosition(x, y);
