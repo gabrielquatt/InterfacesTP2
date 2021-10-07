@@ -8,9 +8,7 @@ class Game {
     this.canvas = null;
     this.ctx = null;
     this.table = new Table();
-    this.coins = [];
-    this.muoseDown = false;
-    this.lastCoin;
+   
   }
 
   isStarted() {
@@ -19,46 +17,6 @@ class Game {
 
   getPlayerTurn() {
     return this.playerTurn.getName();
-  }
-
-  down(e) {
-    this.muoseDown = true;
-    if (!this.lastCoin) {
-      let coin = this.findCoin(e.layerX, e.layerY);
-      if (coin) {
-        this.lastCoin = coin;
-        this.coins.push(this.lastCoin);
-      } else {
-        this.lastCoin = null;
-      }
-    }
-  }
-
-  up() {
-    this.muoseDown = false;
-    this.lastCoin = null;
-  }
-
-  move(e) {
-    if (this.muoseDown === true && this.lastCoin) {
-      this.lastCoin.setPosition(e.layerX, e.layerY);
-      this.drawGame();
-    }
-  }
-
-  drawGame() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (let i = 0; i < this.coins.length; i++) {
-      this.coins[i].draw();
-    }
-    this.table.drawTable();
-  }
-
-  findCoin(x, y) {
-    for (let i = 0; i < this.coins.length; i++) {
-      let elem = this.coins[i];
-      if (elem.find(x, y)) return this.coins.splice(i, 1)[0];
-    }
   }
 
   /**
@@ -74,40 +32,11 @@ class Game {
     this.playerTurn = p1;
     this.canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
-    this.canvas.addEventListener("mousedown", (e) => this.down(e));
-    this.canvas.addEventListener("mouseup", () => this.up());
-    this.canvas.addEventListener("mousemove", (e) => this.move(e));
 
-    this.table.init(size, canvas, this.ctx);
-
-    this.table.drawTable();
-    this.showCoins(size, c1, c2);
+    this.table.init(size, canvas, this.ctx, c1 , c2);
+    this.table.drawTable();  
   }
 
-  showCoins(n, cP1, cP2) {
-    let posY = this.canvas.height - 40;
-    let posX = 40;
-    let pos_X = this.canvas.width - posX;
-
-    n = 7 * 6;
-    if (n == 5) n = 7 * 9;
-    if (n == 6) n = 9 * 11;
-
-    let indice = (this.canvas.height * 0.7) / n;
-    let radio = 20;
-
-    for (let i = 0; i < n; i++) {
-      let d = Math.random() * 5;
-      d = Math.random() > 0.5 ? d : d * -1;
-      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
-      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
-      c1.draw();
-      c2.draw();
-      this.coins.push(c1);
-      this.coins.push(c2);
-      posY = posY - indice;
-    }
-  }
 
   play(player, col) {
     if (player === undefined || col === undefined) return;

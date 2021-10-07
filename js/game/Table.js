@@ -9,45 +9,75 @@ class Table {
     this.canvas = null;
     this.ctx = null;
     this.coin = null;
+    this.coins = [];
+    this.lastCoin;
+    this.muoseDown = false;
+    this.topArea = false;
   }
 
   /**
-   *
    * @param {*} tam tamaño del tablero
    */
-  init(tam, canvas, ctx) {
+  init(tam, canvas, ctx, c1, c2) {
     this.numToWin = parseInt(tam);
-    if(tam != 4){
-      if (tam == 5){
+    if (tam != 4) {
+      if (tam == 5) {
         this.COLS = 9;
         this.ROWS = 7;
-      } 
-  
-      if (tam == 6){
+      }
+      if (tam == 6) {
         this.COLS = 11;
         this.ROWS = 9;
-      } 
+      }
     }
     this.ROWS = parseInt(tam) + 2;
     this.numToWin = parseInt(tam);
-
-
     this.lastRow = null;
     this.lastCol = null;
     this.canvas = canvas;
     this.ctx = ctx;
     this.loadTable();
+    this.showCoins(tam, c1, c2);
+
+
+    this.canvas.addEventListener("mousedown", (e) => this.down(e));
+    this.canvas.addEventListener("mouseup", () => this.up());
+    this.canvas.addEventListener("mousemove", (e) => this.move(e));
+  }
+
+  showCoins(n, cP1, cP2) {
+    let posY = this.canvas.height - 40;
+    let posX = 40;
+    let pos_X = this.canvas.width - posX;
+
+    n = 7 * 6;
+    if (n == 5) n = 7 * 9;
+    if (n == 6) n = 9 * 11;
+
+    let indice = (this.canvas.height * 0.7) / n;
+    let radio = 20;
+
+    for (let i = 0; i < n / 2; i++) {
+      let d = Math.random() * 5;
+      d = Math.random() > 0.5 ? d : d * -1;
+      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
+      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
+      c1.draw();
+      c2.draw();
+      this.coins.push(c1);
+      this.coins.push(c2);
+      posY = posY - indice;
+    }
   }
 
   drawTable() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let prop = this.tab[0][0].getRadio() + 5;
-
     let y = this.canvas.height * 0.1;
-
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
-
     y = y + prop;
+    if (!this.topArea) this.drawTopArea(prop, x - prop);
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
       row.forEach((coin) => {
@@ -57,6 +87,25 @@ class Table {
       });
       y = y + prop * 2;
     });
+    this.coins.forEach((c) => c.draw());
+  }
+
+  drawTopArea(p, x) {
+    this.topArea = true;
+
+    for (let i = 0; i < this.COLS; i++) {
+      let area = document.createElement("div");
+      area.style.width = p * 2 + "px";
+      area.style.height = p * 2 + "px";
+      area.style.backgroundColor = "green";
+      area.style.position = "absolute";
+      area.style.top = "152px";
+      area.style.left = x + "px";
+      area.setAttribute("id", "area" + i);
+      area.setAttribute("name", "area");
+      document.body.appendChild(area);
+      x = x + p * 2;
+    }
   }
 
   /**
@@ -70,6 +119,38 @@ class Table {
         () => new Coin(0, 0, "white", radio, this.canvas, 0)
       )
     );
+  }
+
+  down(e) {
+    this.muoseDown = true;
+    if (!this.lastCoin) {
+      let coin = this.findCoin(e.layerX, e.layerY);
+      if (coin) {
+        this.lastCoin = coin;
+        this.coins.push(this.lastCoin);
+      } else {
+        this.lastCoin = null;
+      }
+    }
+  }
+
+  up() {
+    this.muoseDown = false;
+    this.lastCoin = null;
+  }
+
+  move(e) {
+    if (this.muoseDown === true && this.lastCoin) {
+      this.lastCoin.setPosition(e.layerX, e.layerY);
+      this.drawTable();
+    }
+  }
+
+  findCoin(x, y) {
+    for (let i = 0; i < this.coins.length; i++) {
+      let elem = this.coins[i];
+      if (elem.find(x, y)) return this.coins.splice(i, 1)[0];
+    }
   }
 
   /**
