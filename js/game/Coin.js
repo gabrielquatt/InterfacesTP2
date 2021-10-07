@@ -9,6 +9,7 @@ class Coin {
     this.free = true;
     this.id = id;
     this.image = new Image();
+    this.boolean = false; 
   }
 
   draw() {
@@ -17,14 +18,25 @@ class Coin {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
 
     this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
-    this.setImgValue(this.color);
-
-    
     //=========================================================================================================//
-    this.image.onload = () => {
+    // Comentario Explicativo de la solucion: ("Eliminar con Merge")
+    //---------------------------------------------------------------------------------------------------------//
+    // cada vez que se realizaba un cambio se volvia a setear la ruta de la imagen
+    // la solucion fue crear una variable aux para determinar si la image habia sido editada
+    // si no se habia editado se esperaba que la imagen se carge "onload"
+    // luego cada vez que se dibuje ya no era necesario editar ni esperar que se carge su imagen.
+    //=========================================================================================================//
+    if(this.boolean == false){
+      this.setImgValue(this.color);
+      this.image.onload = () => {
+        this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
+        this.boolean = true; //cambio boolean porque ya no seria necesario cambiar la imagen de la ficha
+        console.log("onload");
+      }
+    }else{
       this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
+      console.log("else");
     }
-    this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
     //=========================================================================================================//
 
     this.ctx.fill();

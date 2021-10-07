@@ -81,6 +81,8 @@ class Game {
     this.table.init(size, canvas, this.ctx);
 
     this.table.drawTable();
+    //Vuelvo a confirmar el arreglo de coins como vacio porque al reiniciar o revancha se bugean las fichas
+    this.coins = [];
     this.showCoins(size, c1, c2);
   }
 
@@ -99,15 +101,22 @@ class Game {
     for (let i = 0; i < n; i++) {
       let d = Math.random() * 5;
       d = Math.random() > 0.5 ? d : d * -1;
-      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
-      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
-      c1.draw();
-      c2.draw();
-      this.coins.push(c1);
-      this.coins.push(c2);
+
+
+        let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
+        let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
+       
+        this.coins.push(c1);
+        this.coins.push(c2);
+        c1.draw();
+        c2.draw();
+    
+      
       posY = posY - indice;
     }
   }
+
+  
 
   play(player, col) {
     if (player === undefined || col === undefined) return;
