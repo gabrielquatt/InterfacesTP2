@@ -3,11 +3,11 @@
 const url_menu = "pages/menu.html";
 const url_game = "pages/game.html";
 
-let player1; //Nombre Player 1
-let player2; //Nombre Player 2
-let coinP1;  //Color Ficha P1 
-let coinP2;  //Color Ficha P2
-let numToWin;
+let player1; // Nombre Player 1
+let player2; // Nombre Player 2
+let coinP1; // Color Ficha P1
+let coinP2; // Color Ficha P2
+let numToWin; // Tipo de juego
 let game = new Game();
 let time_game;
 
@@ -44,7 +44,7 @@ function load_page(page) {
       content.innerHTML = r;
 
       if (page == url_menu) {
-        stop();//PARO EL RELOJ PORQUE SINO BUSCA UN ELEMENTO EN HTML
+        stop(); //PARO EL RELOJ PORQUE SINO BUSCA UN ELEMENTO EN HTML
         document.getElementById("btn_start").addEventListener("click", () => {
           if (verificarDatos()) {
             iniciarJuego();
@@ -52,7 +52,7 @@ function load_page(page) {
         });
       } else {
         // changeBackGround();
-        stop(); //RESETEO EL RELOJ 
+        stop(); //RESETEO EL RELOJ
         start(time_game); // COMIENZA EL CONTEO DE PARTIDA
         document.getElementById("info_p1").innerHTML = player1.getName();
         document.getElementById("info_p2").innerHTML = player2.getName();
@@ -85,8 +85,7 @@ function verificarDatos() {
     alertError("Complete Todos Los Campos");
   } else if (coinP1 == coinP2) {
     alertError("¡No Se Permite Jugar Con Las Mismas Fichas!");
-  }
-  else return true;
+  } else return true;
 }
 
 //====================================TIMER======================================//
@@ -95,17 +94,19 @@ let stopwatchInterval;
 let runningTime = 0;
 
 function start(t) {
-  document.getElementById("time_game").innerHTML = ("Tiempo de Juego: " + t + ":00");
+  document.getElementById("time_game").innerHTML =
+    "Tiempo de Juego: " + t + ":00";
   let startTime = Date.now() - runningTime;
   stopwatchInterval = setInterval(() => {
     runningTime = Date.now() - startTime;
     let timer = calculateTime(runningTime);
-    if (timer == t + ":00") {//si el tiempo se cumple se da la partida como empatada.
+    if (timer == t + ":00") {
+      //si el tiempo se cumple se da la partida como empatada.
       pause();
       alertTie();
     }
-    document.getElementById("timer").innerHTML = "<p>"+timer+"</p>";
-  }, 1000)
+    document.getElementById("timer").innerHTML = "<p>" + timer + "</p>";
+  }, 1000);
 }
 
 //NOTA IMPORTANTE: una vez que se encuentre un ganador se debe pausar el reloj.
@@ -118,19 +119,19 @@ function stop() {
   clearInterval(stopwatchInterval);
 }
 
-const calculateTime = runningTime => {
+const calculateTime = (runningTime) => {
   const total_seconds = Math.floor(runningTime / 1000);
   const total_minutes = Math.floor(total_seconds / 60);
 
   const display_seconds = (total_seconds % 60).toString().padStart(2, "0");
   const display_minutes = total_minutes.toString().padStart(2, "0");
 
-  return `${display_minutes}:${display_seconds}`
-}
+  return `${display_minutes}:${display_seconds}`;
+};
 
 //==================================== ALERTS ======================================//
 // Se utilizo la libreria sweetalert2 https://sweetalert2.github.io/#examples para
-// la creaccion de alertas, ya que nos facilitaban su creaccion y no interferia en 
+// la creaccion de alertas, ya que nos facilitaban su creaccion y no interferia en
 // la logica del Juego pedido en el enunciado del TPE-2
 
 function alertError(msj) {
@@ -200,15 +201,15 @@ function colorChangeP2() {
 function styleCircle(value) {
   switch (value) {
     case "yellow":
-      return 'background-color: yellow; color: black;';
+      return "background-color: yellow; color: black;";
     case "blue":
-      return 'background: rgb(6, 89, 212); color: #ffffff;';
+      return "background: rgb(6, 89, 212); color: #ffffff;";
     case "red":
-      return 'background: red; color: #ffffff;';
+      return "background: red; color: #ffffff;";
     case "violet":
-      return 'background: rgb(171, 6, 212); color: #ffffff;';
+      return "background: rgb(171, 6, 212); color: #ffffff;";
     case "orange":
-      return 'background: orange; color: #ffffff;';
+      return "background: orange; color: #ffffff;";
   }
 }
 
