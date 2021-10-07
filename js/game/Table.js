@@ -33,15 +33,15 @@ class Table {
     let prop = this.tab[0][0].getRadio()+1;
 
     let y = this.canvas.height * 0.1;
-    let x = this.canvas.width * 0.1;
-
+    
     let width = prop * this.COLS;
+    let x = this.canvas.width / 2 - width;
     
 
     y = y + prop;
     this.tab.forEach((row) => {
     
-      x = width ;
+      x = this.canvas.width / 2 - width;
       row.forEach((coin) => {
         coin.setPosition(x, y);
         coin.draw();
