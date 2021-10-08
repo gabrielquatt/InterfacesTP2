@@ -8,7 +8,6 @@ class Game {
     this.canvas = null;
     this.ctx = null;
     this.table = new Table();
-   
   }
 
   isStarted() {
@@ -23,6 +22,8 @@ class Game {
    *
    * @param { Player } p1 player 1
    * @param { Player } p2 player 2
+   * @param { String } c1 color de ficha
+   * @param { String } c2 color de ficha
    * @param { Number } size numero de fichas en linea necesarias para ganar
    */
   init(p1, p2, size, c1, c2) {
@@ -30,15 +31,16 @@ class Game {
     this.p1 = p1;
     this.p2 = p2;
     this.playerTurn = p1;
+
     this.canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
 
-    this.table.init(size, canvas, this.ctx, c1 , c2);
-    this.table.drawTable();  
+    this.table.init(size, canvas, this.ctx, c1, c2, "white", "red");
+
+    this.table.drawTable();
   }
 
 
-  
 
   play(player, col) {
     if (player === undefined || col === undefined) return;
