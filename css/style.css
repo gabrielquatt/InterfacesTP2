@@ -12,6 +12,8 @@
 
 h1,h2,p,label{
   color: white;
+  margin: 0px;
+  padding: 10px;
 }
 
 body {
@@ -152,4 +154,22 @@ span.p2 {
   margin-right: 15px;
   text-align: center;
   width: 1.6em;
+}
+
+
+dialog{
+  background-color: #f7f7f7;
+
+
+}
+
+dialog>p,.menuInfo>p{
+  color: black;
+  padding: 4px;
+}
+
+.menuInfo>dialog{
+  color: black;
+  margin-left: 30%;
+  margin-right: 30%;
 }

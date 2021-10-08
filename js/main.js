@@ -3,11 +3,13 @@
 const url_menu = "pages/menu.html";
 const url_game = "pages/game.html";
 
-let player1; // Nombre Player 1
-let player2; // Nombre Player 2
-let coinP1; // Color Ficha P1
-let coinP2; // Color Ficha P2
-let numToWin; // Tipo de juego
+let player1; //Nombre Player 1
+let player2; //Nombre Player 2
+let coinP1;  //Color Ficha P1 
+let coinP2;  //Color Ficha P2
+let pP1;     //Persoaneje P1
+let pP2;     //Persoaneje P2
+let numToWin;
 let game = new Game();
 let time_game;
 
@@ -23,6 +25,8 @@ function iniciarJuego() {
   numToWin = document.getElementById("type_Game").value;
   coinP1 = document.getElementById("colorP1").value;
   coinP2 = document.getElementById("colorP2").value;
+  pP1 = document.getElementById("pJ1").value;
+  pP2 = document.getElementById("pJ2").value;
   time_game = document.getElementById("time_game").value;
   player1 = new Player(1, name_1);
   player2 = new Player(2, name_2);
@@ -56,7 +60,7 @@ function load_page(page) {
         start(time_game); // COMIENZA EL CONTEO DE PARTIDA
         document.getElementById("info_p1").innerHTML = player1.getName();
         document.getElementById("info_p2").innerHTML = player2.getName();
-        game.init(player1, player2, numToWin, coinP1, coinP2);
+        game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
 
         document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reset").addEventListener("click", () => {
@@ -212,6 +216,8 @@ function styleCircle(value) {
       return "background: orange; color: #ffffff;";
   }
 }
+
+
 
 // function changeBackGround(){
 //   let body = document.getElementById("conatiner");

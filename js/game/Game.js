@@ -4,6 +4,8 @@ class Game {
     this.started = false;
     this.p1;
     this.p2;
+    this.pj1;
+    this.pj2;
     this.playerTurn = null;
     this.canvas = null;
     this.ctx = null;
@@ -25,15 +27,17 @@ class Game {
    * @param { Player } p2 player 2
    * @param { Number } size numero de fichas en linea necesarias para ganar
    */
-  init(p1, p2, size, c1, c2) {
+  init(p1, p2 , size, c1, c2, pj1, pj2) {
     this.started = true;
     this.p1 = p1;
     this.p2 = p2;
+    this.pj1=pj1;
+    this.pj2=pj2;
     this.playerTurn = p1;
     this.canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
 
-    this.table.init(size, canvas, this.ctx, c1 , c2);
+    this.table.init(size, canvas, this.ctx, c1 , c2, pj1, pj2);
     this.table.drawTable();  
   }
 

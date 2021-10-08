@@ -1,10 +1,32 @@
-
-
 <div class="div_menu">
     <div class="tittle">
         <h1>4 En Linea</h1>
         <div>
-        <label for="player1">Nombre Jugador 1 </label>
+            <div>
+                <dialog id="ms">
+                    <p>
+                        El Juego consiste en poner "4, 5 o 6" Fichas en Linea segun el tamaño de juego selecionado antes
+                        del que tiempo (tambien seleccionado) se acabe.
+                    </p>
+                    <p>
+                        Cada jugador debera seleccionar su color de ficha (No se permite usar mismo color) y un
+                        personaje de ficha.
+                    </p>
+                    <img src="img/info/bender.png" alt="bender">
+                    <img src="img/info/fray.png" alt="fray">
+                    <img src="img/info/zoidberg.png" alt="zoidberg">
+                    <img src="img/info/leela.png" alt="leela">
+                    <img src="img/info/profesor.png" alt="profesor">
+                    <p> Bender - Fray - Zoidberg - Leela - Profesor</p>
+                    <p>Segun el modo de Juego "4, 5 o 6": el tamaño del tablero cambiara su tamaño, 
+                        si el tiempo finaliza se tomara como empate la partida.</p>
+                    <p>Para ganar debera formar x fichas en filas, ya sea lateral ↔, vertical ↕ o en diagonal ↖↗.</p>
+                    <button id="close" class="success" onclick="document.getElementById('ms').close()">Ok!</button>
+                </dialog>
+                <button id="show" onclick="document.getElementById('ms').show()">Info Como Jugar</button>
+            </div>
+
+            <label for="player1">Nombre Jugador 1 </label>
             <input type="name" id="player1" placeholder="Player 1" value="facu">
 
         </div>
@@ -15,49 +37,69 @@
         <p></p>
         <div>
             <label for="colorP1">Color Ficha Jugador 1</label>
-            <select name="select" id="colorP1" class="section"  onchange="colorChangeP1();">
+            <select name="select" id="colorP1" class="section" onchange="colorChangeP1();">
                 <option value="blue" selected>Azul</option>
-                <option value="red" >Rojo</option>
+                <option value="red">Rojo</option>
                 <option value="violet">Violeta</option>
                 <option value="yellow">Amarillo</option>
                 <option value="orange">Naranja</option>
-              </select>
-              <span class="p1" id="p1">P1</span>
+            </select>
+            <span class="p1" id="p1">P1</span>
         </div>
         <div>
             <label for="colorP2">Color Ficha Jugador 2</label>
-            <select name="select" id="colorP2"  onchange="colorChangeP2();">
-                <option  value="blue">Azul</option>
-                <option  value="red" selected>Rojo</option>
-                <option  value="violet">Violeta</option>
-                <option  value="yellow">Amarillo</option>
-                <option  value="orange">Naranja</option>
+            <select name="select" id="colorP2" onchange="colorChangeP2();">
+                <option value="blue">Azul</option>
+                <option value="red" selected>Rojo</option>
+                <option value="violet">Violeta</option>
+                <option value="yellow">Amarillo</option>
+                <option value="orange">Naranja</option>
             </select>
             <span class="p2" id="p2">P2</span>
         </div>
-
         <p></p>
         <div>
-            <label for="type_Game">Tamaño Tablero</label>
+            <label for="pJ1">Personaje Ficha J1</label>
+            <select name="select" id="pJ1">
+                <option value="fray" selected>Fray</option>
+                <option value="bender">Bender</option>
+                <option value="leela">Leela</option>
+                <option value="zoidberg">Zoidberg</option>
+                <option value="profesor">Profesor</option>
+            </select>
+        </div>
+        <div>
+            <label for="pJ2">Personaje Ficha J2</label>
+            <select name="select" id="pJ2">
+                <option value="fray" selected>Fray</option>
+                <option value="bender">Bender</option>
+                <option value="leela">Leela</option>
+                <option value="zoidberg">Zoidberg</option>
+                <option value="profesor">Profesor</option>
+            </select>
+        </div>
+        <p></p>
+        <div>
+            <label for="type_Game">Modo De juego</label>
             <select name="select" id="type_Game">
                 <option value="4" selected>4 en linea</option>
-                <option value="5" >5 en linea</option>
+                <option value="5">5 en linea</option>
                 <option value="6">6 en linea</option>
-              </select>
+            </select>
         </div>
         <p></p>
         <div>
             <label for="time_game">Tiempo de Partida</label>
             <select name="select" id="time_game">
                 <option value="03" selected>Rapida: 3 minutos</option>
-                <option value="05" >Normal: 5 minutos</option>
+                <option value="05">Normal: 5 minutos</option>
                 <option value="10">Lenta: 10 minutos</option>
-              </select>
+            </select>
         </div>
         <p></p>
         <div>
             <button id="btn_start" class="success">Comenzar!</button>
         </div>
     </div>
-  <!-- form para cargar datos del juego -->
+    <!-- form para cargar datos del juego -->
 </div>

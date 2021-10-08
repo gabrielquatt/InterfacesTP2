@@ -18,7 +18,7 @@ class Table {
   /**
    * @param {*} tam tamaño del tablero
    */
-  init(tam, canvas, ctx, c1, c2) {
+  init(tam, canvas, ctx, c1, c2, pj1, pj2) {
     this.numToWin = parseInt(tam);
     if (tam != 4) {
       if (tam == 5) {
@@ -38,15 +38,13 @@ class Table {
     this.ctx = ctx;
     this.coins = [];
     this.loadTable();
-    this.showCoins(tam, c1, c2);
-
-
+    this.showCoins(tam, c1, c2, pj1, pj2);
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
   }
 
-  showCoins(n, cP1, cP2) {
+  showCoins(n, cP1, cP2,pj1, pj2) {
   
     let posY = this.canvas.height - 40;
     let posX = 40;
@@ -62,10 +60,9 @@ class Table {
     for (let i = 0; i < n / 2; i++) {
       let d = Math.random() * 5;
       d = Math.random() > 0.5 ? d : d * -1;
-      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
-      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
-      c1.draw();
-      c2.draw();
+      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1,pj1);
+      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2,pj2);
+  
       this.coins.push(c1);
       this.coins.push(c2);
       posY = posY - indice;
@@ -118,7 +115,7 @@ class Table {
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(
         Array(this.COLS),
-        () => new Coin(0, 0, "white", radio, this.canvas, 0)
+        () => new Coin(0, 0, "white", radio, this.canvas, 0,"table")
       )
     );
   }
