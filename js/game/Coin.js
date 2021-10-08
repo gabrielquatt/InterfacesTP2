@@ -1,15 +1,16 @@
 class Coin {
-  constructor(x, y, color, radio, canvas, id) {
+  constructor(x, y, color, radio, canvas, id, pj1) {
     this.x = x;
     this.y = y;
     this.radio = radio;
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.color = color;
+    this.pj = pj1;
     this.free = true;
     this.id = id;
     this.image = new Image();
-    this.boolean = false; 
+    this.boolean = false;
   }
 
   draw() {
@@ -26,16 +27,14 @@ class Coin {
     // si no se habia editado se esperaba que la imagen se carge "onload"
     // luego cada vez que se dibuje ya no era necesario editar ni esperar que se carge su imagen.
     //=========================================================================================================//
-    if(this.boolean == false){
-      this.setImgValue(this.color);
+    if (this.boolean == false) {
+      this.setImgValue(this.color, this.pj);
       this.image.onload = () => {
         this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
         this.boolean = true; //cambio boolean porque ya no seria necesario cambiar la imagen de la ficha
-        console.log("onload");
       }
-    }else{
+    } else {
       this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
-      console.log("else");
     }
     //=========================================================================================================//
 
@@ -43,12 +42,12 @@ class Coin {
     this.ctx.closePath();
   }
 
-  getRadio(){
+  getRadio() {
     return this.radio;
   }
-  
-  setImgValue(color) {
-    this.image.src = "./img/" + color + ".png";
+
+  setImgValue(color, pj) {
+    this.image.src = "./img/" + pj + "/" + color + ".png";
   }
 
   setPosition(x, y) {

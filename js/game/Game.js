@@ -4,6 +4,8 @@ class Game {
     this.started = false;
     this.p1;
     this.p2;
+    this.pj1;
+    this.pj2;
     this.playerTurn = null;
     this.canvas = null;
     this.ctx = null;
@@ -67,10 +69,12 @@ class Game {
    * @param { Player } p2 player 2
    * @param { Number } size numero de fichas en linea necesarias para ganar
    */
-  init(p1, p2, size, c1, c2) {
+  init(p1, p2 , size, c1, c2, pj1, pj2) {
     this.started = true;
     this.p1 = p1;
     this.p2 = p2;
+    this.pj1=pj1;
+    this.pj2=pj2;
     this.playerTurn = p1;
     this.canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
@@ -83,10 +87,10 @@ class Game {
     this.table.drawTable();
     //Vuelvo a confirmar el arreglo de coins como vacio porque al reiniciar o revancha se bugean las fichas
     this.coins = [];
-    this.showCoins(size, c1, c2);
+    this.showCoins(size, c1, c2, pj1, pj2);
   }
 
-  showCoins(n, cP1, cP2) {
+  showCoins(n, cP1, cP2, pj1, pj2) {
     let posY = this.canvas.height - 40;
     let posX = 40;
     let pos_X = this.canvas.width - posX;
@@ -103,8 +107,8 @@ class Game {
       d = Math.random() > 0.5 ? d : d * -1;
 
 
-        let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1);
-        let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2);
+        let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1, pj1);
+        let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2, pj2);
        
         this.coins.push(c1);
         this.coins.push(c2);

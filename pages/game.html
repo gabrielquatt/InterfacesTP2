@@ -9,16 +9,35 @@
     <div class="div2">
         <h2>Turno Jugador: <span id="turn_player"></span></h2><!-- Info Turno / Ganador -->
 
-       <!-- <button id="aux" type="button">test alert winner</button>-->
+        <!-- <button id="aux" type="button">test alert winner</button>-->
         <button id="aux" type="button">test alert winner</button>
+
+        <div class="menuInfo">
+            <dialog id="ms">
+                <p>Para Ganar recuerde que debera formar ✖️ fichas en fila, ya sea Lateral ↔, Vertical ↕ o en Diagonal ↖↗.</p>
+                <p>Cada jugador podra mover sus fichas en su turno, para soltar una ficha en el tablero debe colocarla
+                    en la columna que lo desee en la parte superior</p>
+                <img src="img/info/infCasilla.png" alt="casilla">
+
+                <p>Si desea terminar la partia puede precionar el Boton Resetear🔄 que lo regresara al menu principal</p>
+                <p>Recuerde que el Tiempo⌛ no se detiene y buena suerte!</p>
+                <p></p>
+                <button id="close" class="success" onclick="document.getElementById('ms').close()">Ok!</button>
+
+            </dialog>
+        </div>
+            <button id="show" onclick="document.getElementById('ms').show()">Info Como Jugar</button>
+
         <!-- Button Reset -->
-        <button id="btn_reset" class="warnnig">Resetear</button>
+        <button id="btn_reset" class="warnnig">Resetear🔄</button>
     </div>
     <div class="div3">
         <!-- Info Grupo -->
         <div>
             <h2 id="time_game"></h2>
-            <div id="timer"><p>00:00</p></div>
+            <div id="timer">
+                <p>00:00</p>
+            </div>
         </div>
     </div>
     <div class="div4">
