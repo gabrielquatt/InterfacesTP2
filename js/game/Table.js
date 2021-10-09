@@ -12,24 +12,28 @@ class Table {
     this.coins = [];
     this.lastCoin;
     this.muoseDown = false;
-    this.topArea = false;
   }
 
   /**
+   *
    * @param {*} tam tamaño del tablero
+   * @param {*} c1 color imagen ficha jugador 1
+   * @param {*} c2 color imagen ficha jugador 2
+   * @param {*} imgBox color imagen casillero
+   * @param {*} imgDrop color imagen area de soltar ficha
    */
-  init(tam, canvas, ctx, c1, c2, pj1, pj2) {
+  init(tam, canvas, ctx, c1, c2, imgBox, imgDrop) {
     this.numToWin = parseInt(tam);
-    if (tam != 4) {
-      if (tam == 5) {
-        this.COLS = 9;
-        this.ROWS = 7;
-      }
-      if (tam == 6) {
-        this.COLS = 11;
-        this.ROWS = 9;
-      }
+
+    if (tam == 5) {
+      this.COLS = 9;
+      this.ROWS = 7;
     }
+    if (tam == 6) {
+      this.COLS = 11;
+      this.ROWS = 9;
+    }
+
     this.ROWS = parseInt(tam) + 2;
     this.numToWin = parseInt(tam);
     this.lastRow = null;
@@ -37,46 +41,56 @@ class Table {
     this.canvas = canvas;
     this.ctx = ctx;
     this.coins = [];
-    this.loadTable();
-    this.showCoins(tam, c1, c2, pj1, pj2);
+    this.loadTable(imgBox, imgDrop);
+    this.startCoins(tam, c1, c2);
+
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
+    this.table.drawTable();
   }
 
-  showCoins(n, cP1, cP2,pj1, pj2) {
-  
-    let posY = this.canvas.height - 40;
-    let posX = 40;
+  startCoins(n, c1, c2) {
+    let posX = 100;
     let pos_X = this.canvas.width - posX;
-
+    let radio = 20;
     n = 7 * 6;
-    if (n == 5) n = 7 * 9;
-    if (n == 6) n = 9 * 11;
+    let posY = (radio + 5) * 7;
+
+    if (n == 5) {
+      n = 7 * 9;
+      posY = (radio + 5) * 9;
+    }
+    if (n == 6) {
+      n = 9 * 11;
+      posY = (radio + 5) * 11;
+    }
 
     let indice = (this.canvas.height * 0.7) / n;
-    let radio = 20;
-
+    posY += posY;
     for (let i = 0; i < n / 2; i++) {
       let d = Math.random() * 5;
       d = Math.random() > 0.5 ? d : d * -1;
-      let c1 = new Coin(posX + d, posY, cP1, radio, this.canvas, 1,pj1);
-      let c2 = new Coin(pos_X + d, posY, cP2, radio, this.canvas, 2,pj2);
-  
-      this.coins.push(c1);
-      this.coins.push(c2);
+      this.coins.push(this.createCoin(posX + d, posY, c1, radio, 1));
+      this.coins.push(this.createCoin(pos_X + d, posY, c2, radio, 2));
       posY = posY - indice;
     }
+  }
+
+  createCoin(x, y, color, radio, id) {
+    let image = new Image();
+    image.src = "./img/" + color + ".png";
+    let coin = new Coin(x, y, image, radio, this.canvas, id);
+    return coin;
   }
 
   drawTable() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let prop = this.tab[0][0].getRadio() + 5;
-    let y = this.canvas.height * 0.1;
+    let y = prop;
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
-    y = y + prop;
-    if (!this.topArea) this.drawTopArea(prop, x - prop);
+
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
       row.forEach((coin) => {
@@ -89,33 +103,24 @@ class Table {
     this.coins.forEach((c) => c.draw());
   }
 
-  drawTopArea(p, x) {
-    this.topArea = true;
-
-    for (let i = 0; i < this.COLS; i++) {
-      let area = document.createElement("div");
-      area.style.width = p * 2 + "px";
-      area.style.height = p * 2 + "px";
-      area.style.backgroundColor = "green";
-      area.style.position = "absolute";
-      area.style.top = "152px";
-      area.style.left = x + "px";
-      area.setAttribute("id", "area" + i);
-      area.setAttribute("name", "area");
-      document.body.appendChild(area);
-      x = x + p * 2;
-    }
-  }
-
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
-  loadTable() {
+  loadTable(box, dropArea) {
     let radio = 20;
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(
         Array(this.COLS),
-        () => new Coin(0, 0, "white", radio, this.canvas, 0,"table")
+        () => this.createCoin(0, 0, box, radio, this.canvas,0)//new Coin(0, 0, box, radio, this.canvas, 0)
+      )
+    );
+
+    this.tab.splice(
+      0,
+      0,
+      Array.from(
+        Array(this.COLS),
+        () => this.createCoin(0, 0, dropArea, radio, this.canvas,0)
       )
     );
   }
