@@ -22,7 +22,7 @@ class Table {
    * @param {*} imgBox color imagen casillero
    * @param {*} imgDrop color imagen area de soltar ficha
    */
-  init(tam, canvas, ctx, c1, c2, imgBox, imgDrop) {
+  init(tam, canvas, ctx, path1, path2, imgBox, imgDrop) {
     this.numToWin = parseInt(tam);
 
     if (tam == 5) {
@@ -42,44 +42,51 @@ class Table {
     this.ctx = ctx;
     this.coins = [];
     this.loadTable(imgBox, imgDrop);
-    this.startCoins(tam, c1, c2);
+    this.startCoins(tam, path1, path2);
 
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
-    this.table.drawTable();
+    this.drawTable();
   }
 
-  startCoins(n, c1, c2) {
-    let posX = 100;
-    let pos_X = this.canvas.width - posX;
+  startCoins(n, path1, path2) {
+    let posX;
+    let dispersionX;
     let radio = 20;
-    n = 7 * 6;
-    let posY = (radio + 5) * 7;
+    let dispersionY = radio * 2 * 10;
 
+    if (n == 4) {
+      n = 7 * 6;
+      posX = 250;
+      dispersionX = 190;
+    }
     if (n == 5) {
       n = 7 * 9;
-      posY = (radio + 5) * 9;
+      posX = 210;
+      dispersionX = 170;
     }
     if (n == 6) {
       n = 9 * 11;
-      posY = (radio + 5) * 11;
+      posX = 200;
+      dispersionX = 140;
     }
 
-    let indice = (this.canvas.height * 0.7) / n;
-    posY += posY;
+    let posY = 0;
+    let pos_X = this.canvas.width - posX;
+
     for (let i = 0; i < n / 2; i++) {
-      let d = Math.random() * 5;
+      let d = Math.random() * dispersionX;
       d = Math.random() > 0.5 ? d : d * -1;
-      this.coins.push(this.createCoin(posX + d, posY, c1, radio, 1));
-      this.coins.push(this.createCoin(pos_X + d, posY, c2, radio, 2));
-      posY = posY - indice;
+      posY = Math.random() * dispersionY + radio;
+      this.coins.push(this.createCoin(posX + d, posY, path1, radio, 1));
+      this.coins.push(this.createCoin(pos_X + d, posY, path2, radio, 2));
     }
   }
 
-  createCoin(x, y, color, radio, id) {
+  createCoin(x, y, path, radio, id) {
     let image = new Image();
-    image.src = "./img/" + color + ".png";
+    image.src = path;
     let coin = new Coin(x, y, image, radio, this.canvas, id);
     return coin;
   }
@@ -93,6 +100,7 @@ class Table {
 
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
+      x += prop;
       row.forEach((coin) => {
         coin.setPosition(x, y);
         coin.draw();
@@ -111,16 +119,15 @@ class Table {
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(
         Array(this.COLS),
-        () => this.createCoin(0, 0, box, radio, this.canvas,0)//new Coin(0, 0, box, radio, this.canvas, 0)
+        () => this.createCoin(0, 0, box, radio, this.canvas, 0) //new Coin(0, 0, box, radio, this.canvas, 0)
       )
     );
 
     this.tab.splice(
       0,
       0,
-      Array.from(
-        Array(this.COLS),
-        () => this.createCoin(0, 0, dropArea, radio, this.canvas,0)
+      Array.from(Array(this.COLS), () =>
+        this.createCoin(0, 0, dropArea, radio, this.canvas, 0)
       )
     );
   }
