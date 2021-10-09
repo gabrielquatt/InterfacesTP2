@@ -60,7 +60,10 @@ function load_page(page) {
         start(time_game); // COMIENZA EL CONTEO DE PARTIDA
         document.getElementById("info_p1").innerHTML = player1.getName();
         document.getElementById("info_p2").innerHTML = player2.getName();
+        colorP1(coinP1);
+        colorP2(coinP2);
         game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
+
 
         document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reboot").addEventListener("click", () => {
@@ -203,6 +206,16 @@ function colorChangeP2() {
   let selectedValue = selectBox.options[selectBox.selectedIndex].value;
   let circleP2 = document.getElementById("p2");
   circleP2.style.cssText = styleCircle(selectedValue);
+}
+
+function colorP2(color){
+  let circleP2 = document.getElementById("p2");
+  circleP2.style.cssText = styleCircle(color);
+}
+
+function colorP1(color){
+  let circleP1 = document.getElementById("p1");
+  circleP1.style.cssText = styleCircle(color);
 }
 
 function styleCircle(value) {
