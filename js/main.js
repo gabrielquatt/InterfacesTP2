@@ -63,7 +63,10 @@ function load_page(page) {
         game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
 
         document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
-        document.getElementById("btn_reset").addEventListener("click", () => {
+        document.getElementById("btn_reboot").addEventListener("click", () => {
+          load_page(url_game);
+        });
+        document.getElementById("btn_finalize").addEventListener("click", () => {
           load_page(url_menu);
         });
         // // btn aux solo de prueba para alert de victoria
@@ -71,9 +74,9 @@ function load_page(page) {
         //   alert2(); // + nombre del ganador
         // });
         // btn aux solo de prueba para alert de victoria
-        document.getElementById("aux").addEventListener("click", () => {
-          alertWinner(); // + nombre del ganador
-        });
+        // document.getElementById("aux").addEventListener("click", () => {
+        //   alertWinner(); // + nombre del ganador
+        // });
       }
     });
 }
@@ -99,7 +102,7 @@ let runningTime = 0;
 
 function start(t) {
   document.getElementById("time_game").innerHTML =
-    "Tiempo de Juego: " + t + ":00";
+    "Tiempo de Juego: ⌛ " + t + ":00";
   let startTime = Date.now() - runningTime;
   stopwatchInterval = setInterval(() => {
     runningTime = Date.now() - startTime;

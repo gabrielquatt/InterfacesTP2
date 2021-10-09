@@ -1,16 +1,16 @@
 <div class="parent">
     <div class="div1">
         <h2>Jugadores: </h2>
-        <p>player 1 = <span id="info_p1"></span></p>
+        <p>Jugador 1 = <span id="info_p1"></span>  <span class="p1" id="p1">J1</span></p>
 
-        <p>player 2 = <span id="info_p2"></span></p>
+        <p>Jugador 2 = <span id="info_p2"></span>  <span class="p2" id="p2">J2</span></p>
         <!-- Info = (Nombre Juego + player + color ficha + reglas)-->
     </div>
     <div class="div2">
         <h2>Turno Jugador: <span id="turn_player"></span></h2><!-- Info Turno / Ganador -->
 
         <!-- <button id="aux" type="button">test alert winner</button>-->
-        <button id="aux" type="button">test alert winner</button>
+        <!-- <button id="aux" type="button">test alert winner</button> -->
 
         <div class="menuInfo">
             <dialog id="ms">
@@ -19,17 +19,18 @@
                     en la columna que lo desee en la parte superior</p>
                 <img src="img/info/infCasilla.png" alt="casilla">
 
-                <p>Si desea terminar la partia puede precionar el Boton Resetear🔄 que lo regresara al menu principal</p>
+                <p>Si desea terminar la partia puede precionar el Boton Terminar Juego❌ o puede reiniciar la partida con el boton Reiniciar🔄 </p>
                 <p>Recuerde que el Tiempo⌛ no se detiene y buena suerte!</p>
                 <p></p>
                 <button id="close" class="success" onclick="document.getElementById('ms').close()">Ok!</button>
 
             </dialog>
         </div>
-            <button id="show" onclick="document.getElementById('ms').show()">Info Como Jugar</button>
+            <button id="show" onclick="document.getElementById('ms').show()">Como Jugar❔</button>
 
         <!-- Button Reset -->
-        <button id="btn_reset" class="warnnig">Resetear🔄</button>
+        <button id="btn_reboot" class="warnnig">Riniciar🔄</button>
+        <button id="btn_finalize" class="btnRed">Terminar Juego❌</button>
     </div>
     <div class="div3">
         <!-- Info Grupo -->
