@@ -5,10 +5,10 @@ const url_game = "pages/game.html";
 
 let player1; //Nombre Player 1
 let player2; //Nombre Player 2
-let coinP1;  //Color Ficha P1 
-let coinP2;  //Color Ficha P2
-let pP1;     //Persoaneje P1
-let pP2;     //Persoaneje P2
+let coinP1; //Color Ficha P1
+let coinP2; //Color Ficha P2
+let pP1; //Persoaneje P1
+let pP2; //Persoaneje P2
 let numToWin;
 let game = new Game();
 let time_game;
@@ -67,8 +67,11 @@ function load_page(page) {
         document.getElementById("btn_reboot").addEventListener("click", () => {
           load_page(url_game);
         });
-        document.getElementById("btn_finalize").addEventListener("click", () => {
-
+        document
+          .getElementById("btn_finalize")
+          .addEventListener("click", () => {
+            load_page(url_menu);
+          });
       }
     });
 }
@@ -197,12 +200,12 @@ function colorChangeP2() {
   circleP2.style.cssText = styleCircle(selectedValue);
 }
 
-function colorP2(color){
+function colorP2(color) {
   let circleP2 = document.getElementById("p2");
   circleP2.style.cssText = styleCircle(color);
 }
 
-function colorP1(color){
+function colorP1(color) {
   let circleP1 = document.getElementById("p1");
   circleP1.style.cssText = styleCircle(color);
 }
@@ -221,8 +224,6 @@ function styleCircle(value) {
       return "background: orange; color: #ffffff;";
   }
 }
-
-
 
 // function changeBackGround(){
 //   let body = document.getElementById("conatiner");
