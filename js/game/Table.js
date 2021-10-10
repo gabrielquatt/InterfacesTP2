@@ -43,7 +43,7 @@ class Table {
     this.coins = [];
     this.loadTable(imgBox, imgDrop);
     this.startCoins(tam, path1, path2);
-
+    console.log(this.tab);
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", () => this.up());
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
@@ -79,8 +79,12 @@ class Table {
       let d = Math.random() * dispersionX;
       d = Math.random() > 0.5 ? d : d * -1;
       posY = Math.random() * dispersionY + radio;
-      this.coins.push(this.createCoin(posX + d, posY, path1, radio, 1));
-      this.coins.push(this.createCoin(pos_X + d, posY, path2, radio, 2));
+      this.coins.push(
+        this.createCoin(parseInt(posX + d), parseInt(posY), path1, radio, 1)
+      );
+      this.coins.push(
+        this.createCoin(parseInt(pos_X + d), parseInt(posY), path2, radio, 2)
+      );
     }
   }
 
@@ -89,6 +93,13 @@ class Table {
     image.src = path;
     let coin = new Coin(x, y, image, radio, this.canvas, id);
     return coin;
+  }
+
+  createDropArea(x, y, path, radio, id) {
+    let image = new Image();
+    image.src = path;
+    let dropArea = new DropArea(x, y, image, radio, this.canvas, id);
+    return dropArea;
   }
 
   drawTable() {
@@ -101,9 +112,9 @@ class Table {
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
       x += prop;
-      row.forEach((coin) => {
-        coin.setPosition(x, y);
-        coin.draw();
+      row.forEach((figure) => {
+        figure.setPosition(x, y);
+        figure.draw();
         x = x + prop * 2;
       });
       y = y + prop * 2;
@@ -117,17 +128,16 @@ class Table {
   loadTable(box, dropArea) {
     let radio = 20;
     this.tab = Array.from(Array(this.ROWS), () =>
-      Array.from(
-        Array(this.COLS),
-        () => this.createCoin(0, 0, box, radio, this.canvas, 0) //new Coin(0, 0, box, radio, this.canvas, 0)
+      Array.from(Array(this.COLS), () =>
+        this.createCoin(0, 0, box, radio, this.canvas, 0)
       )
     );
-
+    let i = 0;
     this.tab.splice(
       0,
       0,
       Array.from(Array(this.COLS), () =>
-        this.createCoin(0, 0, dropArea, radio, this.canvas, 0)
+        this.createDropArea(0, 0, dropArea, radio, i++)
       )
     );
   }
@@ -148,6 +158,7 @@ class Table {
   up() {
     this.muoseDown = false;
     this.lastCoin = null;
+    
   }
 
   move(e) {
