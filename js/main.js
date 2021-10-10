@@ -64,22 +64,11 @@ function load_page(page) {
         colorP2(coinP2);
         game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
 
-
-        document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reboot").addEventListener("click", () => {
           load_page(url_game);
         });
         document.getElementById("btn_finalize").addEventListener("click", () => {
-          load_page(url_menu);
-        });
-        // // btn aux solo de prueba para alert de victoria
-        // document.getElementById("aux").addEventListener("click", () => {
-        //   alert2(); // + nombre del ganador
-        // });
-        // btn aux solo de prueba para alert de victoria
-        // document.getElementById("aux").addEventListener("click", () => {
-        //   alertWinner(); // + nombre del ganador
-        // });
+
       }
     });
 }

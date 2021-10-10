@@ -6,7 +6,6 @@ class Game {
     this.p2;
     this.pj1;
     this.pj2;
-    this.playerTurn = null;
     this.canvas = null;
     this.ctx = null;
     this.table = new Table();
@@ -14,10 +13,6 @@ class Game {
 
   isStarted() {
     return this.started;
-  }
-
-  getPlayerTurn() {
-    return this.playerTurn.getName();
   }
 
   /**
@@ -40,7 +35,6 @@ class Game {
     this.p2 = p2;
     this.pj1 = pj1;
     this.pj2 = pj2;
-    this.playerTurn = p1;
     this.canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
 
@@ -51,32 +45,8 @@ class Game {
       path1,
       path2,
       pathBox,
-      pathDrop
+      pathDrop,p1,p2
     );
-  }
-
-  play(player, col) {
-    if (player === undefined || col === undefined) return;
-    if (!player.equals(this.playerTurn)) return;
-
-    let ok = this.table.insertCoin(this.playerTurn.getCoin(), col);
-    if (!ok) return;
-
-    // this.table.drawTable();
-
-    if (this.table.isWinner()) {
-      this.winner = true;
-      return this.final("gano: " + this.playerTurn);
-    } else if (!this.table.hasEmptyCell()) {
-      return this.final("empate");
-    } else {
-      this.changePlayerTurn();
-    }
-    return true;
-  }
-
-  changePlayerTurn() {
-    this.playerTurn = p.equals(this.p1) ? this.p2 : this.p1;
   }
 
   final() {

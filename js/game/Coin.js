@@ -1,35 +1,23 @@
-class Coin {
-  constructor(x, y, image, radio, canvas, id) {
-    this.x = x;
-    this.y = y;
+class Coin extends Figure {
+  constructor(x, y, image, radio, canvas, id, id_player) {
+    super(x, y, image, canvas, id);
     this.radio = radio;
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
+    this.id_player = id_player;
+    // define si la ficha esta libre para ser jugada
     this.free = true;
-    this.id = id;
-    this.image = image;
-    this.boolean = false; 
   }
 
-  draw() {
-    if (!this.free) return;
-    if(this.boolean == false){
-      this.image.onload = () => {
-        this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
-        this.boolean = true; 
-      }
-    } else {
-      this.ctx.drawImage(this.image, this.x - this.radio, this.y - this.radio, this.radio * 2, this.radio * 2);
-    }
-  }
-
-  getRadio() {
+  size() {
     return this.radio;
   }
 
+  getIdPlayer(){
+    return this.id_player;
+  }
+
   setPosition(x, y) {
-    this.x = x;
-    this.y = y;
+    if (!this.free) return;
+    super.setPosition(x, y);
   }
 
   /**
@@ -42,10 +30,5 @@ class Coin {
     this.free = false;
   }
 
-  find(x, y) {
-    return (
-      Math.pow(this.radio, 2) >
-      Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)
-    );
-  }
+  
 }
