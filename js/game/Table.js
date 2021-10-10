@@ -12,6 +12,10 @@ class Table {
     this.coins = [];
     this.lastCoin;
     this.muoseDown = false;
+    this.playerTurn = null;
+    this.p1;
+    this.p2;
+    this.winner = false;
   }
 
   /**
@@ -22,7 +26,7 @@ class Table {
    * @param {*} imgBox color imagen casillero
    * @param {*} imgDrop color imagen area de soltar ficha
    */
-  init(tam, canvas, ctx, path1, path2, imgBox, imgDrop) {
+  init(tam, canvas, ctx, path1, path2, imgBox, imgDrop, p1, p2) {
     this.numToWin = parseInt(tam);
 
     if (tam == 5) {
@@ -41,12 +45,16 @@ class Table {
     this.canvas = canvas;
     this.ctx = ctx;
     this.coins = [];
+    this.p1 = p1;
+    this.p2 = p2;
+    this.playerTurn = p2;
+
     this.loadTable(imgBox, imgDrop);
     this.startCoins(tam, path1, path2);
-    console.log(this.tab);
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", (e) => this.up(e));
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
+    this.changePlayerTurn();
     this.drawTable();
   }
 
@@ -80,18 +88,25 @@ class Table {
       d = Math.random() > 0.5 ? d : d * -1;
       posY = Math.random() * dispersionY + radio;
       this.coins.push(
-        this.createCoin(parseInt(posX + d), parseInt(posY), path1, radio, 1)
+        this.createCoin(parseInt(posX + d), parseInt(posY), path1, radio, i, 1)
       );
       this.coins.push(
-        this.createCoin(parseInt(pos_X + d), parseInt(posY), path2, radio, 2)
+        this.createCoin(
+          parseInt(pos_X + d),
+          parseInt(posY),
+          path2,
+          radio,
+          -i,
+          2
+        )
       );
     }
   }
 
-  createCoin(x, y, path, radio, id) {
+  createCoin(x, y, path, radio, id, id_player) {
     let image = new Image();
     image.src = path;
-    let coin = new Coin(x, y, image, radio, this.canvas, id);
+    let coin = new Coin(x, y, image, radio, this.canvas, id, id_player);
     return coin;
   }
 
@@ -104,7 +119,7 @@ class Table {
 
   drawTable() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    let prop = this.tab[0][0].getRadio() + 5;
+    let prop = this.tab[0][0].size() + 5;
     let y = prop;
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
@@ -129,7 +144,7 @@ class Table {
     let radio = 20;
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(Array(this.COLS), () =>
-        this.createCoin(0, 0, box, radio, this.canvas, 0)
+        this.createCoin(0, 0, box, radio, 0, null)
       )
     );
     let i = 0;
@@ -143,6 +158,7 @@ class Table {
   }
 
   down(e) {
+    if (this.winner) return;
     this.muoseDown = true;
     if (!this.lastCoin) {
       let coin = this.findCoin(e.layerX, e.layerY);
@@ -156,18 +172,21 @@ class Table {
   }
 
   up(e) {
+    if (this.winner) return;
     this.muoseDown = false;
     if (this.lastCoin) {
-      let column = this.findColumn(e.layerX, e.layerY);
-      if(column){
-
-        console.log("jugar en la columna " + column.getId());
+      if (this.lastCoin.getIdPlayer() == this.playerTurn.getId()) {
+        let column = this.findColumn(e.layerX, e.layerY);
+        if (column) {
+          this.play(column.getColumn());
+        }
       }
     }
     this.lastCoin = null;
   }
 
   move(e) {
+    if (this.winner) return;
     if (this.muoseDown === true && this.lastCoin) {
       this.lastCoin.setPosition(e.layerX, e.layerY);
       this.drawTable();
@@ -188,12 +207,35 @@ class Table {
     }
   }
 
+  play(col) {
+    let ok = this.insertCoin(col);
+
+    if (!ok) return;
+
+    this.drawTable();
+
+    if (this.isWinner()) {
+      this.winner = true;
+      alert("gano " + this.playerTurn.getName());
+    } else if (!this.hasEmptyCell()) {
+      /// Alert empate
+    } else {
+      this.changePlayerTurn();
+    }
+  }
+
+  changePlayerTurn() {
+    this.playerTurn = this.playerTurn.equals(this.p1) ? this.p2 : this.p1;
+    document.getElementById("turn_player").innerHTML =
+      this.playerTurn.getName();
+  }
+
   /**
    * @returns true si existe una casilla vacia
    */
   hasEmptyCell() {
     for (let i = 0; i < this.COLS; i++) {
-      if (this.t[0][i] === null) return true;
+      if (this.tab[0][i].getId() == 0) return true;
     }
     return false;
   }
@@ -202,21 +244,19 @@ class Table {
    * @param { Number } col es la columna donde se solto una ficha
    * @returns si la columna es valida para jugar la ficha
    */
-  validColumn(col) {
-    return col > -1 && col < this.COLS && this.t[0][col] === null;
+  validateColumn(col) {
+    return col > -1 && col < this.COLS && this.tab[1][col].getId() == 0;
   }
 
-  insertCoin(coin, col) {
-    if (!this.isValidColumn(col)) return;
-
-    let r = this.ROWS - 1;
-    while (this.table[r][col] != null) {
+  insertCoin(col) {
+    if (!this.validateColumn(col)) return;
+    let r = this.ROWS;
+    while (this.tab[r][col].getId() != 0) {
       r--;
     }
-    this.table[r][col] = coin;
+    this.tab[r][col] = this.lastCoin;
     this.lastRow = r;
     this.lastCol = col;
-
     return true;
   }
 
@@ -227,13 +267,16 @@ class Table {
   horizontal() {
     let cont = 1;
     let c = this.lastCol;
-    let x = this.t[this.lastRow][c];
-    while (c > 0 && this.t[this.lastRow][c - 1] == x) {
+    let x = this.playerTurn.getId();
+    while (c > 0 && this.tab[this.lastRow][c - 1].getIdPlayer() == x) {
       cont++;
       c--;
     }
     c = this.lastCol;
-    while (c < this.COLS - 1 && this.t[this.lastRow][c + 1] == x) {
+    while (
+      c < this.COLS - 1 &&
+      this.tab[this.lastRow][c + 1].getIdPlayer() == x
+    ) {
       cont++;
       c++;
     }
@@ -243,13 +286,13 @@ class Table {
   vertical() {
     let cont = 1;
     let r = this.lastRow;
-    let x = this.t[r][this.lastCol];
-    while (r > 0 && this.t[r - 1][this.lastCol] == x) {
+    let x = this.playerTurn.getId();
+    while (r > 0 && this.tab[r - 1][this.lastCol].getIdPlayer() == x) {
       cont++;
       r--;
     }
     r = this.lastRow;
-    while (r < this.ROWS - 1 && this.t[r + 1][this.lastCol] == x) {
+    while (r < this.ROWS && this.tab[r + 1][this.lastCol].getIdPlayer() == x) {
       cont++;
       r++;
     }
@@ -264,15 +307,23 @@ class Table {
     let cont = 1;
     let c = this.lastCol;
     let r = this.lastRow;
-    let x = this.t[r][c];
-    while (c > 0 && r < this.ROWS - 1 && this.t[r + 1][c - 1] == x) {
+    let x = this.playerTurn.getId();
+    while (
+      c > 0 &&
+      r < this.ROWS &&
+      this.tab[r + 1][c - 1].getIdPlayer() == x
+    ) {
       cont++;
       c--;
       r++;
     }
     c = this.lastCol;
     r = this.lastRow;
-    while (c < this.COLS - 1 && r > 0 && this.t[r - 1][c + 1] == x) {
+    while (
+      c < this.COLS - 1 &&
+      r > 0 &&
+      this.tab[r - 1][c + 1].getIdPlayer() == x
+    ) {
       cont++;
       c++;
       r--;
@@ -284,8 +335,8 @@ class Table {
     let cont = 1;
     let c = this.lastCol;
     let r = this.lastRow;
-    let x = this.t[r][c];
-    while (c > 0 && r > 0 && this.t[r - 1][c - 1] == x) {
+    let x = this.playerTurn.getId();
+    while (c > 0 && r > 0 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
       cont++;
       c--;
       r--;
@@ -294,8 +345,8 @@ class Table {
     r = this.lastRow;
     while (
       c < this.COLS - 1 &&
-      r < this.ROWS - 1 &&
-      this.t[r + 1][c + 1] == x
+      r < this.ROWS &&
+      this.tab[r + 1][c + 1].getIdPlayer() == x
     ) {
       cont++;
       c++;

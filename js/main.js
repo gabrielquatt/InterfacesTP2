@@ -62,7 +62,6 @@ function load_page(page) {
         document.getElementById("info_p2").innerHTML = player2.getName();
         game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
 
-        document.getElementById("turn_player").innerHTML = game.getPlayerTurn();
         document.getElementById("btn_reset").addEventListener("click", () => {
           load_page(url_menu);
         });
