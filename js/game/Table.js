@@ -45,7 +45,7 @@ class Table {
     this.startCoins(tam, path1, path2);
     console.log(this.tab);
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
-    this.canvas.addEventListener("mouseup", () => this.up());
+    this.canvas.addEventListener("mouseup", (e) => this.up(e));
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
     this.drawTable();
   }
@@ -155,10 +155,16 @@ class Table {
     }
   }
 
-  up() {
+  up(e) {
     this.muoseDown = false;
+    if (this.lastCoin) {
+      let column = this.findColumn(e.layerX, e.layerY);
+      if(column){
+
+        console.log("jugar en la columna " + column.getId());
+      }
+    }
     this.lastCoin = null;
-    
   }
 
   move(e) {
@@ -172,6 +178,13 @@ class Table {
     for (let i = 0; i < this.coins.length; i++) {
       let elem = this.coins[i];
       if (elem.find(x, y)) return this.coins.splice(i, 1)[0];
+    }
+  }
+
+  findColumn(x, y) {
+    for (let i = 0; i < this.COLS; i++) {
+      let elem = this.tab[0][i];
+      if (elem.find(x, y)) return elem;
     }
   }
 

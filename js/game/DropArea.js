@@ -3,6 +3,8 @@ class DropArea extends Figure {
     super(x, y, image, radio, canvas, id);
   }
 
-  
+  getColumn(){
+    return super.getId();
+  }
 
 }

@@ -42,6 +42,10 @@ class Figure {
     return this.radio;
   }
 
+  getId(){
+    return this.id;
+  }
+
   find(x, y) {
     return (
       Math.pow(this.radio, 2) >
