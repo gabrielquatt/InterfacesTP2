@@ -113,6 +113,18 @@ button {
   background-color: #d4ac0d;
 }
 
+.btnRed {
+  
+  background-color: #c50f0f;
+}
+.btnRed:hover {
+  background-color: #ff0000;
+}
+
+.btnRed,.success,.warnnig{
+  margin: 2px;
+}
+
 /**
 * Estilo no finales solo para orientacion de la pagina 
 */

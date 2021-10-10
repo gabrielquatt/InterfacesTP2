@@ -28,17 +28,24 @@ class Table {
    */
   init(tam, canvas, ctx, path1, path2, imgBox, imgDrop, p1, p2) {
     this.numToWin = parseInt(tam);
+    let radio = 26;
 
+    if (tam == 4) {
+     this.COLS = 7;
+     this.ROWS = 6;
+   }
     if (tam == 5) {
-      this.COLS = 9;
-      this.ROWS = 7;
+       radio = 20.5;
+      this.COLS = 10;
+      this.ROWS = 8;
     }
     if (tam == 6) {
-      this.COLS = 11;
-      this.ROWS = 9;
+       radio = 20;
+      console.log(tam);
+      this.COLS = 12;
+      this.ROWS = 8;
     }
-
-    this.ROWS = parseInt(tam) + 2;
+    
     this.numToWin = parseInt(tam);
     this.lastRow = null;
     this.lastCol = null;
@@ -48,9 +55,8 @@ class Table {
     this.p1 = p1;
     this.p2 = p2;
     this.playerTurn = p2;
-
-    this.loadTable(imgBox, imgDrop);
-    this.startCoins(tam, path1, path2);
+    this.loadTable(imgBox, imgDrop, radio);
+    this.startCoins(tam, path1, path2, radio);
     this.canvas.addEventListener("mousedown", (e) => this.down(e));
     this.canvas.addEventListener("mouseup", (e) => this.up(e));
     this.canvas.addEventListener("mousemove", (e) => this.move(e));
@@ -58,26 +64,27 @@ class Table {
     this.drawTable();
   }
 
-  startCoins(n, path1, path2) {
+  startCoins(n, path1, path2,radio) {
     let posX;
     let dispersionX;
-    let radio = 20;
+ 
     let dispersionY = radio * 2 * 10;
 
     if (n == 4) {
       n = 7 * 6;
       posX = 250;
-      dispersionX = 190;
+      dispersionY = radio * 2 * 8;
+      dispersionX = 150;
     }
     if (n == 5) {
-      n = 7 * 9;
+      n = 9 * 8;
       posX = 210;
-      dispersionX = 170;
+      dispersionX = 130;
     }
     if (n == 6) {
-      n = 9 * 11;
+      n = 9 * 12;
       posX = 200;
-      dispersionX = 140;
+      dispersionX = 120;
     }
 
     let posY = 0;
@@ -140,8 +147,8 @@ class Table {
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
-  loadTable(box, dropArea) {
-    let radio = 20;
+  loadTable(box, dropArea,radio) {
+  
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(Array(this.COLS), () =>
         this.createCoin(0, 0, box, radio, 0, null)
