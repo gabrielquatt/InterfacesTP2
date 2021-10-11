@@ -10,12 +10,18 @@ class Table {
     this.ctx = null;
     this.coin = null;
     this.coins = [];
-    this.lastCoin;
+    this.lastCoin = null;
     this.muoseDown = false;
     this.playerTurn = null;
     this.p1;
     this.p2;
     this.winner = false;
+    this.background = new Image();
+    this.background.src = "./img/fondos/fondo2.png";
+    this.background.onload = () => {
+      this.backLoaded = true;
+    };
+    this.backLoaded = false;
   }
 
   /**
@@ -41,7 +47,6 @@ class Table {
     }
     if (tam == 6) {
       radio = 20;
-      console.log(tam);
       this.COLS = 12;
       this.ROWS = 8;
     }
@@ -90,23 +95,15 @@ class Table {
     let posY = 0;
     let pos_X = this.canvas.width - posX;
 
-    for (let i = 0; i < n / 2; i++) {
+    for (let i = 1; i <= n / 2; i++) {
       let d = Math.random() * dispersionX;
       d = Math.random() > 0.5 ? d : d * -1;
       posY = Math.random() * dispersionY + radio;
-      this.coins.push(
-        this.createCoin(parseInt(posX + d), parseInt(posY), path1, radio, i, 1)
-      );
-      this.coins.push(
-        this.createCoin(
-          parseInt(pos_X + d),
-          parseInt(posY),
-          path2,
-          radio,
-          -i,
-          2
-        )
-      );
+      let x = parseInt(posX + d);
+      let _x = parseInt(pos_X + d);
+      let y = parseInt(posY);
+      this.coins.push(this.createCoin(x, y, path1, radio, i, 1));
+      this.coins.push(this.createCoin(_x, y, path2, radio, -i, 2));
     }
   }
 
@@ -130,7 +127,7 @@ class Table {
     let y = prop;
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
-
+    this.drawBackground(prop, x, width * 2);
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
       x += prop;
@@ -144,11 +141,22 @@ class Table {
     this.coins.forEach((c) => c.draw());
   }
 
+  drawBackground(p, x, w) {
+    console.log(p, x, w);
+    if (this.backLoaded) {
+      this.ctx.drawImage(this.background, x, 0, w, p * 2 * this.COLS);
+    } else {
+      this.background.onload = () => {
+        this.ctx.drawImage(this.background, x, 0, w, p * 2 * this.COLS);
+        this.backLoaded = true;
+      };
+    }
+  }
+
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
   loadTable(box, dropArea, radio) {
-
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(Array(this.COLS), () =>
         this.createCoin(0, 0, box, radio, 0, null)
@@ -194,9 +202,11 @@ class Table {
 
   move(e) {
     if (this.winner) return;
-    if (this.muoseDown === true && this.lastCoin) {
-      this.lastCoin.setPosition(e.layerX, e.layerY);
-      this.drawTable();
+    if (this.muoseDown && this.lastCoin) {
+      if (this.lastCoin.getIdPlayer() == this.playerTurn.getId()) {
+        this.lastCoin.setPosition(e.layerX, e.layerY);
+        this.drawTable();
+      }
     }
   }
 
@@ -325,9 +335,11 @@ class Table {
     let cont = 1;
     let r = this.lastRow;
     let x = this.playerTurn.getId();
-    while (r > 0 && this.tab[r - 1][this.lastCol].getIdPlayer() == x) {
-      cont++;
-      r--;
+    if (r > 1) {
+      while (this.tab[r - 1][this.lastCol].getIdPlayer() == x && r > 1) {
+        cont++;
+        r--;
+      }
     }
     r = this.lastRow;
     while (r < this.ROWS && this.tab[r + 1][this.lastCol].getIdPlayer() == x) {
@@ -357,14 +369,16 @@ class Table {
     }
     c = this.lastCol;
     r = this.lastRow;
-    while (
-      c < this.COLS - 1 &&
-      r > 0 &&
-      this.tab[r - 1][c + 1].getIdPlayer() == x
-    ) {
-      cont++;
-      c++;
-      r--;
+    if (r > 1) {
+      while (
+        c < this.COLS - 1 &&
+        r > 1 &&
+        this.tab[r - 1][c + 1].getIdPlayer() == x
+      ) {
+        cont++;
+        c++;
+        r--;
+      }
     }
     return cont >= this.numToWin;
   }
@@ -374,10 +388,12 @@ class Table {
     let c = this.lastCol;
     let r = this.lastRow;
     let x = this.playerTurn.getId();
-    while (c > 0 && r > 0 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
-      cont++;
-      c--;
-      r--;
+    if (r > 1) {
+      while (c > 0 && r > 1 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
+        cont++;
+        c--;
+        r--;
+      }
     }
     c = this.lastCol;
     r = this.lastRow;
