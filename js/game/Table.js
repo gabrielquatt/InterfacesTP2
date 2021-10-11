@@ -16,6 +16,12 @@ class Table {
     this.p1;
     this.p2;
     this.winner = false;
+    this.background = new Image();
+    this.background.src = "./img/fondos/fondo2.png";
+    this.background.onload = () => {
+      this.backLoaded = true;
+    };
+    this.backLoaded = false;
   }
 
   /**
@@ -122,7 +128,7 @@ class Table {
     let y = prop;
     let width = prop * this.COLS;
     let x = this.canvas.width / 2 - width;
-
+    this.drawBackground(prop, x, width * 2);
     this.tab.forEach((row) => {
       x = this.canvas.width / 2 - width;
       x += prop;
@@ -134,6 +140,18 @@ class Table {
       y = y + prop * 2;
     });
     this.coins.forEach((c) => c.draw());
+  }
+
+  drawBackground(p, x, w) {
+    console.log(p, x, w);
+    if (this.backLoaded) {
+      this.ctx.drawImage(this.background, x, 0, w, p * 2 * this.COLS);
+    } else {
+      this.background.onload = () => {
+        this.ctx.drawImage(this.background, x, 0, w, p * 2 * this.COLS);
+        this.backLoaded = true;
+      };
+    }
   }
 
   /**
@@ -340,10 +358,12 @@ class Table {
     let c = this.lastCol;
     let r = this.lastRow;
     let x = this.playerTurn.getId();
-    while (c > 0 && r > 0 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
-      cont++;
-      c--;
-      r--;
+    if (r > 1) {
+      while (c > 0 && r > 01 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
+        cont++;
+        c--;
+        r--;
+      }
     }
     c = this.lastCol;
     r = this.lastRow;
