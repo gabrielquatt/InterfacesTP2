@@ -48,13 +48,6 @@ class Game {
       pathDrop,p1,p2
     );
   }
-
-  final() {
-    this.started = false;
-    if (this.winner) {
-      console.log("\n Gano " + this.playerTurn.name + " !!!! \n \n");
-    } else {
-      console.log("\n Empate !!!!");
-    }
-  }
 }
+
+

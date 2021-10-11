@@ -31,21 +31,21 @@ class Table {
     let radio = 26;
 
     if (tam == 4) {
-     this.COLS = 7;
-     this.ROWS = 6;
-   }
+      this.COLS = 7;
+      this.ROWS = 6;
+    }
     if (tam == 5) {
-       radio = 20.5;
+      radio = 20.5;
       this.COLS = 10;
       this.ROWS = 8;
     }
     if (tam == 6) {
-       radio = 20;
+      radio = 20;
       console.log(tam);
       this.COLS = 12;
       this.ROWS = 8;
     }
-    
+
     this.numToWin = parseInt(tam);
     this.lastRow = null;
     this.lastCol = null;
@@ -64,10 +64,10 @@ class Table {
     this.drawTable();
   }
 
-  startCoins(n, path1, path2,radio) {
+  startCoins(n, path1, path2, radio) {
     let posX;
     let dispersionX;
- 
+
     let dispersionY = radio * 2 * 10;
 
     if (n == 4) {
@@ -147,8 +147,8 @@ class Table {
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
-  loadTable(box, dropArea,radio) {
-  
+  loadTable(box, dropArea, radio) {
+
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(Array(this.COLS), () =>
         this.createCoin(0, 0, box, radio, 0, null)
@@ -223,12 +223,43 @@ class Table {
 
     if (this.isWinner()) {
       this.winner = true;
-      alert("gano " + this.playerTurn.getName());
+      alertWinner(this.playerTurn.getName(), true);
     } else if (!this.hasEmptyCell()) {
       /// Alert empate
     } else {
       this.changePlayerTurn();
     }
+  }
+
+  alertWinner(name, boolean) {
+    let icon;
+    let msj;
+    if (boolean) {
+      icon = "success";
+      msj = "¡EL Ganador Es: " + name + "!";
+    } else {
+      icon = "warnin";
+      msj = "¡No Hubo Ganadores!";
+    }
+
+    Swal.fire({
+      title: msj,
+      text: "¿desean jugar de nuevo?",
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Revancha!",
+      cancelButtonText: "No ",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        iniciarJuego();
+        load_page(url_game);
+      } else {
+        game = new Game();
+        load_page(url_menu);
+      }
+    });
   }
 
   changePlayerTurn() {
