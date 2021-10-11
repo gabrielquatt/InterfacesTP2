@@ -10,7 +10,7 @@ class Table {
     this.ctx = null;
     this.coin = null;
     this.coins = [];
-    this.lastCoin;
+    this.lastCoin = null;
     this.muoseDown = false;
     this.playerTurn = null;
     this.p1;
@@ -31,21 +31,21 @@ class Table {
     let radio = 26;
 
     if (tam == 4) {
-     this.COLS = 7;
-     this.ROWS = 6;
-   }
+      this.COLS = 7;
+      this.ROWS = 6;
+    }
     if (tam == 5) {
-       radio = 20.5;
+      radio = 20.5;
       this.COLS = 10;
       this.ROWS = 8;
     }
     if (tam == 6) {
-       radio = 20;
-      console.log(tam);
+      radio = 20;
+
       this.COLS = 12;
       this.ROWS = 8;
     }
-    
+
     this.numToWin = parseInt(tam);
     this.lastRow = null;
     this.lastCol = null;
@@ -64,10 +64,10 @@ class Table {
     this.drawTable();
   }
 
-  startCoins(n, path1, path2,radio) {
+  startCoins(n, path1, path2, radio) {
     let posX;
     let dispersionX;
- 
+
     let dispersionY = radio * 2 * 10;
 
     if (n == 4) {
@@ -90,23 +90,15 @@ class Table {
     let posY = 0;
     let pos_X = this.canvas.width - posX;
 
-    for (let i = 0; i < n / 2; i++) {
+    for (let i = 1; i <= n / 2; i++) {
       let d = Math.random() * dispersionX;
       d = Math.random() > 0.5 ? d : d * -1;
       posY = Math.random() * dispersionY + radio;
-      this.coins.push(
-        this.createCoin(parseInt(posX + d), parseInt(posY), path1, radio, i, 1)
-      );
-      this.coins.push(
-        this.createCoin(
-          parseInt(pos_X + d),
-          parseInt(posY),
-          path2,
-          radio,
-          -i,
-          2
-        )
-      );
+      let x = parseInt(posX + d);
+      let _x = parseInt(pos_X + d);
+      let y = parseInt(posY);
+      this.coins.push(this.createCoin(x, y, path1, radio, i, 1));
+      this.coins.push(this.createCoin(_x, y, path2, radio, -i, 2));
     }
   }
 
@@ -147,8 +139,7 @@ class Table {
   /**
    * inicializar matriz de tamaño rows * cols con valores en null.
    */
-  loadTable(box, dropArea,radio) {
-  
+  loadTable(box, dropArea, radio) {
     this.tab = Array.from(Array(this.ROWS), () =>
       Array.from(Array(this.COLS), () =>
         this.createCoin(0, 0, box, radio, 0, null)
@@ -194,9 +185,11 @@ class Table {
 
   move(e) {
     if (this.winner) return;
-    if (this.muoseDown === true && this.lastCoin) {
-      this.lastCoin.setPosition(e.layerX, e.layerY);
-      this.drawTable();
+    if (this.muoseDown && this.lastCoin) {
+      if (this.lastCoin.getIdPlayer() == this.playerTurn.getId()) {
+        this.lastCoin.setPosition(e.layerX, e.layerY);
+        this.drawTable();
+      }
     }
   }
 
@@ -294,9 +287,11 @@ class Table {
     let cont = 1;
     let r = this.lastRow;
     let x = this.playerTurn.getId();
-    while (r > 0 && this.tab[r - 1][this.lastCol].getIdPlayer() == x) {
-      cont++;
-      r--;
+    if (r > 1) {
+      while (this.tab[r - 1][this.lastCol].getIdPlayer() == x && r > 1) {
+        cont++;
+        r--;
+      }
     }
     r = this.lastRow;
     while (r < this.ROWS && this.tab[r + 1][this.lastCol].getIdPlayer() == x) {
@@ -326,14 +321,16 @@ class Table {
     }
     c = this.lastCol;
     r = this.lastRow;
-    while (
-      c < this.COLS - 1 &&
-      r > 0 &&
-      this.tab[r - 1][c + 1].getIdPlayer() == x
-    ) {
-      cont++;
-      c++;
-      r--;
+    if (r > 1) {
+      while (
+        c < this.COLS - 1 &&
+        r > 1 &&
+        this.tab[r - 1][c + 1].getIdPlayer() == x
+      ) {
+        cont++;
+        c++;
+        r--;
+      }
     }
     return cont >= this.numToWin;
   }
