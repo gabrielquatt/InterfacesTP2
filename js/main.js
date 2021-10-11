@@ -55,11 +55,12 @@ function load_page(page) {
           }
         });
       } else {
-        // changeBackGround();
+        game= new Game();
         stop(); //RESETEO EL RELOJ
         start(time_game); // COMIENZA EL CONTEO DE PARTIDA
         document.getElementById("info_p1").innerHTML = player1.getName();
         document.getElementById("info_p2").innerHTML = player2.getName();
+        document.getElementById("mode_game").innerHTML= "Para Ganar Forme: "+ numToWin+ " En Linea."; 
         colorP1(coinP1);
         colorP2(coinP2);
         game.init(player1, player2, numToWin, coinP1, coinP2, pP1, pP2);
@@ -70,6 +71,7 @@ function load_page(page) {
         document
           .getElementById("btn_finalize")
           .addEventListener("click", () => {
+            game = new Game();
             load_page(url_menu);
           });
       }
@@ -225,7 +227,3 @@ function styleCircle(value) {
   }
 }
 
-// function changeBackGround(){
-//   let body = document.getElementById("conatiner");
-//   body.style.cssText = 'background: rgb(2,96,120); background: linear-gradient(0deg, rgba(2,96,120,1) 0%, rgba(166,255,240,1) 100%);  color: #ffffff ';
-// }

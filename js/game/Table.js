@@ -47,7 +47,6 @@ class Table {
     }
     if (tam == 6) {
       radio = 20;
-
       this.COLS = 12;
       this.ROWS = 8;
     }
@@ -234,12 +233,43 @@ class Table {
 
     if (this.isWinner()) {
       this.winner = true;
-      alert("gano " + this.playerTurn.getName());
+      alertWinner(this.playerTurn.getName(), true);
     } else if (!this.hasEmptyCell()) {
       /// Alert empate
     } else {
       this.changePlayerTurn();
     }
+  }
+
+  alertWinner(name, boolean) {
+    let icon;
+    let msj;
+    if (boolean) {
+      icon = "success";
+      msj = "¡EL Ganador Es: " + name + "!";
+    } else {
+      icon = "warnin";
+      msj = "¡No Hubo Ganadores!";
+    }
+
+    Swal.fire({
+      title: msj,
+      text: "¿desean jugar de nuevo?",
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Revancha!",
+      cancelButtonText: "No ",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        iniciarJuego();
+        load_page(url_game);
+      } else {
+        game = new Game();
+        load_page(url_menu);
+      }
+    });
   }
 
   changePlayerTurn() {
