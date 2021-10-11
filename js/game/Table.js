@@ -359,7 +359,7 @@ class Table {
     let r = this.lastRow;
     let x = this.playerTurn.getId();
     if (r > 1) {
-      while (c > 0 && r > 01 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
+      while (c > 0 && r > 1 && this.tab[r - 1][c - 1].getIdPlayer() == x) {
         cont++;
         c--;
         r--;
