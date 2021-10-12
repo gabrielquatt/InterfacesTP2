@@ -10,6 +10,7 @@ class Table {
     this.ctx = null;
     this.coin = null;
     this.coins = [];
+    this.countCoins = 0;
     this.lastCoin = null;
     this.muoseDown = false;
     this.playerTurn = null;
@@ -34,7 +35,7 @@ class Table {
    */
   init(tam, canvas, ctx, path1, path2, imgBox, imgDrop, p1, p2) {
     this.numToWin = parseInt(tam);
-    let radio = 26;
+    let radio = 27.5;
 
     if (tam == 4) {
       this.COLS = 7;
@@ -49,6 +50,11 @@ class Table {
       radio = 20;
       this.COLS = 12;
       this.ROWS = 8;
+    }
+    if (tam == 7) {
+      radio = 16;
+      this.COLS = 14;
+      this.ROWS = 10;
     }
 
     this.numToWin = parseInt(tam);
@@ -77,9 +83,9 @@ class Table {
 
     if (n == 4) {
       n = 7 * 6;
-      posX = 250;
-      dispersionY = radio * 2 * 8;
-      dispersionX = 150;
+      posX = 240;
+      dispersionY = radio * 2 * 6;
+      dispersionX = 140;
     }
     if (n == 5) {
       n = 9 * 8;
@@ -90,6 +96,11 @@ class Table {
       n = 9 * 12;
       posX = 200;
       dispersionX = 120;
+    }
+    if (n == 7) {
+      n = 10 * 14;
+      posX = 200;
+      dispersionX = 80;
     }
 
     let posY = 0;
@@ -233,57 +244,25 @@ class Table {
 
     if (this.isWinner()) {
       this.winner = true;
-      alertWinner(this.playerTurn.getName(), true);
+      stop();
+      this.alertWinner(this.playerTurn.getName(), true);
+      //TODO cambiar de color fichas ganadoras.
     } else if (!this.hasEmptyCell()) {
-      /// Alert empate
+      stop();
+      this.alertWinner("",false)
     } else {
-      this.changePlayerTurn();
+      this.changePlayerTurn("",false);
     }
-  }
-
-  alertWinner(name, boolean) {
-    let icon;
-    let msj;
-    if (boolean) {
-      icon = "success";
-      msj = "¡EL Ganador Es: " + name + "!";
-    } else {
-      icon = "warnin";
-      msj = "¡No Hubo Ganadores!";
-    }
-
-    Swal.fire({
-      title: msj,
-      text: "¿desean jugar de nuevo?",
-      icon: icon,
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "¡Revancha!",
-      cancelButtonText: "No ",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        iniciarJuego();
-        load_page(url_game);
-      } else {
-        game = new Game();
-        load_page(url_menu);
-      }
-    });
-  }
-
-  changePlayerTurn() {
-    this.playerTurn = this.playerTurn.equals(this.p1) ? this.p2 : this.p1;
-    document.getElementById("turn_player").innerHTML =
-      this.playerTurn.getName();
   }
 
   /**
    * @returns true si existe una casilla vacia
    */
   hasEmptyCell() {
-    for (let i = 0; i < this.COLS; i++) {
-      if (this.tab[0][i].getId() == 0) return true;
+    for (let i = 1; i < this.COLS; i++) {
+      if (this.tab[1][i].getId() == 0){
+        return true;
+      }  
     }
     return false;
   }
@@ -312,7 +291,7 @@ class Table {
     return this.horizontal() || this.vertical() || this.diagonales();
   }
 
-  horizontal() {
+  horizontal(ok) {
     let cont = 1;
     let c = this.lastCol;
     let x = this.playerTurn.getId();
@@ -408,4 +387,43 @@ class Table {
     }
     return cont >= this.numToWin;
   }
+
+  //========================== Alerts y cambios de texto en pagina ==========================//
+
+  alertWinner(name, boolean) {
+    let icon;
+    let msj;
+    if (boolean) {
+      icon = "success";
+      msj = "¡EL Ganador Es: " + name + "!";
+    } else {
+      icon = "warning";
+      msj = "¡No Hubo Ganadores!";
+    }
+
+    Swal.fire({
+      title: msj,
+      text: "¿desean jugar de nuevo?",
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Revancha!",
+      cancelButtonText: "No ",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        load_page(url_game);
+      } else {
+        load_page(url_menu);
+      }
+    });
+  }
+
+  changePlayerTurn() {
+    this.playerTurn = this.playerTurn.equals(this.p1) ? this.p2 : this.p1;
+    document.getElementById("turn_player").innerHTML =
+      this.playerTurn.getName();
+  }
+
+
 }

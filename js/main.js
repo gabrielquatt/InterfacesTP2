@@ -71,7 +71,6 @@ function load_page(page) {
         document
           .getElementById("btn_finalize")
           .addEventListener("click", () => {
-            game = new Game();
             load_page(url_menu);
           });
       }
@@ -146,26 +145,6 @@ function alertError(msj) {
     showConfirmedButton: true,
     confirmButtonColor: "#3085d6",
   }).then(() => load_page(url_menu));
-}
-
-//TODO recibir ganador de la partida.
-function alertWinner() {
-  Swal.fire({
-    title: "EL Ganador Es: ",
-    text: "¿desean jugar de nuevo?",
-    icon: "success",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Revancha!",
-    cancelButtonText: "No ",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      load_page(url_game);
-    } else {
-      load_page(url_menu);
-    }
-  });
 }
 
 function alertTie() {

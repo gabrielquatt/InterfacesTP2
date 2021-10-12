@@ -5,7 +5,8 @@
             <div>
                 <dialog id="ms">
                     <p>
-                        El Juego consiste en poner "4, 5 o 6" Fichas en Linea segun el tamaño de juego selecionado antes
+                        El Juego consiste en poner "4, 5, 6 o 7" Fichas en Linea segun el tamaño de juego selecionado
+                        antes
                         de que el tiempo (tambien seleccionado) se acabe.
                     </p>
                     <p>
@@ -18,23 +19,25 @@
                     <img src="img/info/leela.png" alt="leela">
                     <img src="img/info/profesor.png" alt="profesor">
                     <p> Bender - Fray - Zoidberg - Leela - Profesor</p>
-                    <p>Segun el modo de Juego "4, 5 o 6": el tamaño del tablero cambiara su tamaño, 
+                    <p>Segun el modo de Juego "4, 5 o 6": el tamaño del tablero cambiara su tamaño,
                         si el tiempo finaliza se tomara como empate la partida.</p>
                     <p>Para ganar debera formar x fichas en filas, ya sea lateral ↔, vertical ↕ o en diagonal ↖↗.</p>
                     <button id="close" class="success" onclick="document.getElementById('ms').close()">Ok!</button>
                 </dialog>
-                <button id="show" onclick="document.getElementById('ms').show()">Como Jugar❔</button>
+                <button id="show" class="white" onclick="document.getElementById('ms').show()">Como Jugar❔</button>
             </div>
-
-            <label for="player1">Nombre Jugador 1 </label>
-            <input type="name" id="player1" placeholder="Player 1" value="facu">
-
         </div>
+
+        <br>
         <div>
+            <label for="player1">Nombre Jugador 1 </label>
+            <input type="name" id="player1" placeholder="Player 1" value="facu" maxlength="10" required>
+            <br>
             <label for="player2">Nombre Jugador 2</label>
-            <input type="name" id="player2" placeholder="Player 2" value="gabi">
+            <input type="name" id="player2" placeholder="Player 2" value="gabi" maxlength="10" required>
         </div>
-        <p></p>
+        <br>
+
         <div>
             <label for="colorP1">Color Ficha Jugador 1</label>
             <select name="select" id="colorP1" class="section" onchange="colorChangeP1();">
@@ -83,22 +86,25 @@
             <label for="type_Game">Modo De juego</label>
             <select name="select" id="type_Game">
                 <option value="4" selected>4 en linea</option>
-                <option value="5" >5 en linea</option>
-                <option value="6" >6 en linea</option>
+                <option value="5">5 en linea</option>
+                <option value="6">6 en linea</option>
+                <option value="7">7 en linea</option>
             </select>
         </div>
         <p></p>
         <div>
             <label for="time_game">Tiempo de Partida</label>
             <select name="select" id="time_game">
-                <option value="03" selected>Rapida: 3 minutos</option>
-                <option value="05">Normal: 5 minutos</option>
-                <option value="10">Lenta: 10 minutos</option>
+                <option value="03" selected>3 minutos</option>
+                <option value="05">5 minutos</option>
+                <option value="10">10 minutos</option>
+                <option value="20">20 minutos</option>
+                <option value="40">40 minutos</option>
             </select>
         </div>
         <p></p>
         <div>
-            <button id="btn_start" class="success">Comenzar!</button>
+            <button id="btn_start" class="success"><strong>¡Comenzar!</strong></button>
         </div>
     </div>
     <!-- form para cargar datos del juego -->

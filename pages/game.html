@@ -7,11 +7,7 @@
         <!-- Info = (Nombre Juego + player + color ficha + reglas)-->
     </div>
     <div class="div2">
-        <h2>Turno Jugador: <span id="turn_player"></span></h2><!-- Info Turno / Ganador -->
-
-        <!-- <button id="aux" type="button">test alert winner</button>-->
-        <!-- <button id="aux" type="button">test alert winner</button> -->
-
+        <p></p>
         <div class="menuInfo">
             <dialog id="ms">
                 <p>Para Ganar recuerde que debera formar ✖️ fichas en fila, ya sea Lateral ↔, Vertical ↕ o en Diagonal ↖↗.</p>
@@ -26,11 +22,13 @@
 
             </dialog>
         </div>
-            <button id="show" onclick="document.getElementById('ms').show()">Como Jugar❔</button>
+            <button id="show" class="white" onclick="document.getElementById('ms').show()">Como Jugar❔</button>
 
         <!-- Button Reset -->
         <button id="btn_reboot" class="warnnig">Reiniciar🔄</button>
         <button id="btn_finalize" class="btnRed">Terminar Juego❌</button>
+        
+        <h2>Turno Jugador: <span id="turn_player"></span></h2><!-- Info Turno / Ganador -->
     </div>
     <div class="div3">
         <!-- Info Grupo -->

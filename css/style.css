@@ -1,17 +1,12 @@
 * {
   text-align: center;
-
+  color: white;
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
     sans-serif;
 }
 
-:root {
-  --bg: rgb(136, 136, 136);
-}
-
 h1,h2,p,label{
-  color: white;
   margin: 0px;
   padding: 10px;
 }
@@ -21,11 +16,10 @@ body {
   /* background-color: var(--bg); */
   margin: 0%;
   padding: 0%;
- 
-  background-image: url("../img/fondos/fondo.png");
+
+  background-image: url("../img/fondos/body.png");
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 input,select,option{
   color: black;
@@ -63,26 +57,20 @@ input,select,option{
   left: 50%;
   margin-top: -100px; /* Negative half of height. */
   margin-left: -250px; /* Negative half of width. */
-
-  background-color: rgba(8, 11, 12, 0.753);
-  /* background-image: -webkit-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
-    background-image: -moz-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
-    background-image: -o-linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
-    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%); */
-
+  background: rgb(109,0,250);
+  background: linear-gradient(0deg, rgba(109,0,250,1) 0%, rgb(49, 0, 58) 100%);
   border-radius: 5px;
-  border: 2px solid rgb(119, 131, 231);
-  box-shadow: 5px 10px 8px #2c2c2c;
+  border: 2px solid rgb(255, 255, 255);
+  
   transition: 0.2s;
 }
 .div_menu:hover {
-  box-shadow: 8px 13px 10px #093a42;
+  box-shadow: 8px 13px 10px #4a0061;
 }
 
 .div_menu,p{
   font-size: large;
 }
-
 
 input {
   border-radius: 4px;
@@ -99,18 +87,30 @@ button {
   box-shadow: 0 2px rgb(31, 31, 31);
 }
 
+button:hover{
+  box-shadow: 4px 4px 4px #4a0061;
+}
+
+.white {
+  background-color: #197bfc; /* Green */
+}
+
+.white:hover {
+  background-color: #009bf5;
+}
+
 .success {
-  background-color: #10eb6b; /* Green */
+  background-color: #1a9103; /* Green */
 }
 .success:hover {
-  background-color: #09c259;
+  background-color: #23b306;
 }
 
 .warnnig {
-  background-color: #f1c40f;
+  background-color: #c29c05;
 }
 .warnnig:hover {
-  background-color: #d4ac0d;
+  background-color: #e6d705;
 }
 
 .btnRed {
@@ -131,19 +131,20 @@ button {
 
 .div4 {
   margin: auto;
-  background-color: rgba(2, 1, 1, 0.651);
+  background-color: rgba(73, 73, 73, 0.24);
+  border: 1px solid rgb(255, 255, 255);
 }
 
 .div1,
 .div2,
-.div3,
-.div4 {
-  border: 1px solid rgb(85, 102, 255);
+.div3 {
+  border: 1px solid rgb(255, 255, 255);
+  background: rgb(109,0,250);
+  background: linear-gradient(0deg, rgba(109,0,250,1) 0%, rgb(49, 0, 58) 100%);
 }
 
 span.p1 {
   background: rgb(6, 89, 212);
-  color: #ffffff;
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -156,7 +157,6 @@ span.p1 {
 }
 span.p2 {
   background: red;
-  color: #ffffff;
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -170,18 +170,15 @@ span.p2 {
 
 
 dialog{
-  background-color: #f7f7f7;
-
-
+  background: rgb(109,0,250);
+  background: linear-gradient(0deg, rgba(109,0,250,1) 0%, rgb(49, 0, 58) 100%);
 }
 
 dialog>p,.menuInfo>p{
-  color: black;
   padding: 4px;
 }
 
 .menuInfo>dialog{
-  color: black;
   margin-left: 30%;
   margin-right: 30%;
 }
