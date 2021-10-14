@@ -96,31 +96,23 @@ class Table {
    * @param {*} radio radio que ocuparan las fichas y demas elementos en el canvas
    */
   startCoins(n, path1, path2, radio) {
-    let posX;
-    let dispersionX;
-
-    let dispersionY = radio * 2 * 10;
+    let posX = 220;
+    let dispersionX = 140;
+    let dispersionY = this.canvas.height - (radio * 2);
 
     if (n == 4) {
       n = 7 * 6;
-      posX = 240;
-      dispersionY = radio * 2 * 6;
-      dispersionX = 140;
     }
     if (n == 5) {
       n = 9 * 8;
-      posX = 210;
-      dispersionX = 130;
     }
     if (n == 6) {
       n = 9 * 12;
-      posX = 200;
-      dispersionX = 120;
+      posX = 180;
     }
     if (n == 7) {
       n = 10 * 14;
-      posX = 200;
-      dispersionX = 80;
+      posX = 180;
     }
 
     let posY = 0;
