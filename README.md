@@ -9,5 +9,5 @@ _Repositorio de trabajos entregables en equipo / Meteria: Interfaces de usuario 
 
 
 ------------------------------------------------------------------------------------------------
-Link TP-1 page: https://gabrielquatt.github.io/InterfacesTP1/
-Link TP-1 GitHub: https://github.com/gabrielquatt/InterfacesTP1
+- Link TP-1 page: https://gabrielquatt.github.io/InterfacesTP1/
+- Link TP-1 GitHub: https://github.com/gabrielquatt/InterfacesTP1
