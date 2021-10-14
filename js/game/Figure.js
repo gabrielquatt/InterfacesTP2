@@ -13,6 +13,9 @@ class Figure {
     this.loaded ? this.putImage() : (this.image.onload = () => this.putImage());
   }
 
+  /**
+   * dibuja la imagen de la ficha
+   */
   putImage() {
     this.ctx.drawImage(
       this.image,
@@ -24,13 +27,19 @@ class Figure {
     this.loaded = true;
   }
 
-  size() {}
-
+  /**
+   * edita la posicion de la figura
+   * @param {*} x posicion en eje x 
+   * @param {*} y posicion en eje y
+   */
   setPosition(x, y) {
     this.x = parseInt(x);
     this.y = parseInt(y);
   }
 
+  /**
+   * @returns retorna el id de la figura 
+   */
   getId() {
     return this.id;
   }

@@ -13,11 +13,11 @@ let numToWin;
 let game = new Game();
 let time_game;
 
-// cargar pagina menu
+// cargar pagina menu inicialmente
 load_page(url_menu);
 
 /**
- * TODO añadir opciones al manu del juego
+ * Funcion encargada de tomar los valores del menu del Juego.
  */
 function iniciarJuego() {
   let name_1 = document.getElementById("player1").value;
@@ -39,6 +39,11 @@ function iniciarJuego() {
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 */
+
+/**
+ * Funcion Partial Render para cargar dinamicamente los elementos y no recargar la pagina.
+ * @param {*} page url de la pagina a cargar  
+ */
 function load_page(page) {
   let content = document.getElementById("content");
   fetch(page)
@@ -77,6 +82,10 @@ function load_page(page) {
     });
 }
 
+/**
+ *  Funcion para verificar que los datos de los jugadores no se encuentren vacios
+ * @returns true si todos los datos son validos
+ */
 function verificarDatos() {
   let p1 = document.getElementById("player1").value;
   let p2 = document.getElementById("player2").value;
@@ -96,6 +105,10 @@ function verificarDatos() {
 let stopwatchInterval;
 let runningTime = 0;
 
+/**
+ * Funcion para comenzar el cronometro de juego
+ * @param {*} t tiempo de juego 
+ */
 function start(t) {
   document.getElementById("time_game").innerHTML =
     "Tiempo de Juego: ⌛ " + t + ":00";
@@ -112,25 +125,87 @@ function start(t) {
   }, 1000);
 }
 
-//NOTA IMPORTANTE: una vez que se encuentre un ganador se debe pausar el reloj.
-function pause() {
-  clearInterval(stopwatchInterval);
-}
-
+/**
+ * Funcion para Detener el reloj 
+ */
 function stop() {
   runningTime = 0;
   clearInterval(stopwatchInterval);
 }
 
+/**
+ * Funcion encargada de ir calculando el los segundos y minutos transcurridos del Juego
+ * @param {*} runningTime 
+ * @returns retorna 
+ */
 const calculateTime = (runningTime) => {
   const total_seconds = Math.floor(runningTime / 1000);
   const total_minutes = Math.floor(total_seconds / 60);
-
   const display_seconds = (total_seconds % 60).toString().padStart(2, "0");
   const display_minutes = total_minutes.toString().padStart(2, "0");
-
   return `${display_minutes}:${display_seconds}`;
 };
+
+//========================MENU====================================//
+/**
+ * Funcion encargada de cambiar el color del circulo previo de color en el menu del juego 
+ * para el jugador 1
+ */
+function colorChangeP1() {
+  let selectBox = document.getElementById("colorP1");
+  let selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  let circleP1 = document.getElementById("p1");
+  circleP1.style.cssText = styleCircle(selectedValue);
+}
+
+/**
+ * Funcion encargada de cambiar el color del circulo previo de color en el MENU del juego 
+ * para el jugador 2
+ */
+function colorChangeP2() {
+  let selectBox = document.getElementById("colorP2");
+  let selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  let circleP2 = document.getElementById("p2");
+  circleP2.style.cssText = styleCircle(selectedValue);
+}
+
+/**
+ * Funcion encargada de pintar otro circulo en la pantalla del GAME para que cada jugador sepa cual es su color 
+ * @param {*} color recibe como parametro el color seleccionado por el Jugador 1
+ */
+ function colorP1(color) {
+  let circleP1 = document.getElementById("p1");
+  circleP1.style.cssText = styleCircle(color);
+}
+
+/**
+ * Funcion encargada de pintar otro circulo en la pantalla del GAME para que cada jugador sepa cual es su color 
+ * @param {*} color recibe como parametro el color seleccionado por el Jugador 2
+ */
+function colorP2(color) {
+  let circleP2 = document.getElementById("p2");
+  circleP2.style.cssText = styleCircle(color);
+}
+
+/**
+ * Funcion encargada de devolver la configuracion del estilo adecuada segun la seleccion del jugador
+ * @param {*} value recibe como parametro un color 
+ * @returns un texto valido para editar el CSS
+ */
+function styleCircle(value) {
+  switch (value) {
+    case "yellow":
+      return "background-color: yellow; color: black;";
+    case "blue":
+      return "background: rgb(6, 89, 212); color: #ffffff;";
+    case "red":
+      return "background: red; color: #ffffff;";
+    case "violet":
+      return "background: rgb(171, 6, 212); color: #ffffff;";
+    case "orange":
+      return "background: orange; color: #ffffff;";
+  }
+}
 
 //==================================== ALERTS ======================================//
 // Se utilizo la libreria sweetalert2 https://sweetalert2.github.io/#examples para
@@ -164,45 +239,5 @@ function alertTie() {
       load_page(url_menu);
     }
   });
-}
-
-//========================MENU====================================//
-function colorChangeP1() {
-  let selectBox = document.getElementById("colorP1");
-  let selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  let circleP1 = document.getElementById("p1");
-  circleP1.style.cssText = styleCircle(selectedValue);
-}
-
-function colorChangeP2() {
-  let selectBox = document.getElementById("colorP2");
-  let selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  let circleP2 = document.getElementById("p2");
-  circleP2.style.cssText = styleCircle(selectedValue);
-}
-
-function colorP2(color) {
-  let circleP2 = document.getElementById("p2");
-  circleP2.style.cssText = styleCircle(color);
-}
-
-function colorP1(color) {
-  let circleP1 = document.getElementById("p1");
-  circleP1.style.cssText = styleCircle(color);
-}
-
-function styleCircle(value) {
-  switch (value) {
-    case "yellow":
-      return "background-color: yellow; color: black;";
-    case "blue":
-      return "background: rgb(6, 89, 212); color: #ffffff;";
-    case "red":
-      return "background: red; color: #ffffff;";
-    case "violet":
-      return "background: rgb(171, 6, 212); color: #ffffff;";
-    case "orange":
-      return "background: orange; color: #ffffff;";
-  }
 }
 

@@ -4,10 +4,16 @@ class Player {
     this.name = name;
   }
 
+  /**
+   * @returns retorna el id del jugador
+   */
   getId(){
     return this.id;
   }
 
+  /**
+   * @returns retorna el nombre del jugador 
+   */
   getName(){
     return this.name;
   }

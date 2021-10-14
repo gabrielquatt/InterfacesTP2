@@ -11,6 +11,9 @@ class Game {
     this.table = new Table();
   }
 
+  /**
+   * @returns retorna si el juego esta inicializado o no; 
+   */
   isStarted() {
     return this.started;
   }

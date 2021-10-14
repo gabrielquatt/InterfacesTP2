@@ -33,6 +33,19 @@ class Table {
    * @param {*} imgBox color imagen casillero
    * @param {*} imgDrop color imagen area de soltar ficha
    */
+
+  /**
+   * 
+   * @param {*} tam tamaño del tablero
+   * @param {*} canvas elemento byId canvas
+   * @param {*} ctx contexto "2d"
+   * @param {*} path1 path de imagen jugador 1
+   * @param {*} path2 path de imagen jugador 1
+   * @param {*} imgBox path de imagen de "caja/casilla vacia" del tablero
+   * @param {*} imgDrop path de imagen donde soltar la ficha (parte superior del tablero)
+   * @param {*} p1 jugador 1
+   * @param {*} p2 jugador 2
+   */
   init(tam, canvas, ctx, path1, path2, imgBox, imgDrop, p1, p2) {
     this.numToWin = parseInt(tam);
     let radio = 27.5;
@@ -75,6 +88,13 @@ class Table {
     this.drawTable();
   }
 
+  /**
+   * Funcion para inicializar las monedas
+   * @param {*} n tamaño del modo de juego (4,5,6,7) en linea
+   * @param {*} path1 path de imagen jugador 1
+   * @param {*} path2 path de imagen jugador 2
+   * @param {*} radio radio que ocuparan las fichas y demas elementos en el canvas
+   */
   startCoins(n, path1, path2, radio) {
     let posX;
     let dispersionX;
@@ -118,6 +138,16 @@ class Table {
     }
   }
 
+  /**
+   * Funcion encargada de dibujar cada ficha dentro del canvas
+   * @param {*} x posicion en el eje x
+   * @param {*} y posicion en el eje x
+   * @param {*} path paht de la imagen de la ficha 
+   * @param {*} radio radio 
+   * @param {*} id identificador unico de cada ficha
+   * @param {*} id_player id de Jugador
+   * @returns retorna la moneda una vez creada para ser guardada en el arreglo de monedas
+   */
   createCoin(x, y, path, radio, id, id_player) {
     let image = new Image();
     image.src = path;
@@ -125,6 +155,15 @@ class Table {
     return coin;
   }
 
+  /**
+   * Funcion encargada de crear el DropArea donde se podran soltar las fichas
+   * @param {*} x posicion en el eje x
+   * @param {*} y posicion en el eje x
+   * @param {*} path path de la imagen de drop area
+   * @param {*} radio radio que ocupara
+   * @param {*} id id del area
+   * @returns retorna el DropArea una vez creado
+   */
   createDropArea(x, y, path, radio, id) {
     let image = new Image();
     image.src = path;
@@ -132,6 +171,9 @@ class Table {
     return dropArea;
   }
 
+  /**
+   * Funcion encargada de Dibujar la Tabla en el canvas
+   */
   drawTable() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let prop = this.tab[0][0].size() + 5;
@@ -152,6 +194,12 @@ class Table {
     this.coins.forEach((c) => c.draw());
   }
 
+  /**
+   * Funcion encargada de dibujar el fondo del tablero
+   * @param {*} p proporcion de la tabla
+   * @param {*} x tamaño en eje x de la tabla
+   * @param {*} w widht total de la tabla
+   */
   drawBackground(p, x, w) {
     console.log(p, x, w);
     if (this.backLoaded) {
@@ -165,7 +213,7 @@ class Table {
   }
 
   /**
-   * inicializar matriz de tamaño rows * cols con valores en null.
+   * Funcion para cargar la tabla y crear las ficha vacias en el tablero
    */
   loadTable(box, dropArea, radio) {
     this.tab = Array.from(Array(this.ROWS), () =>
@@ -183,6 +231,11 @@ class Table {
     );
   }
 
+  /**
+   * 
+   * @param {*} e 
+   * @returns 
+   */
   down(e) {
     if (this.winner) return;
     this.muoseDown = true;
@@ -197,6 +250,11 @@ class Table {
     }
   }
 
+  /**
+   * 
+   * @param {*} e 
+   * @returns 
+   */
   up(e) {
     if (this.winner) return;
     this.muoseDown = false;
@@ -211,6 +269,11 @@ class Table {
     this.lastCoin = null;
   }
 
+  /**
+   * 
+   * @param {*} e 
+   * @returns 
+   */
   move(e) {
     if (this.winner) return;
     if (this.muoseDown && this.lastCoin) {
@@ -221,6 +284,12 @@ class Table {
     }
   }
 
+  /**
+   * 
+   * @param {*} x 
+   * @param {*} y 
+   * @returns 
+   */
   findCoin(x, y) {
     for (let i = 0; i < this.coins.length; i++) {
       let elem = this.coins[i];
@@ -228,6 +297,12 @@ class Table {
     }
   }
 
+  /**
+   * 
+   * @param {*} x 
+   * @param {*} y 
+   * @returns 
+   */
   findColumn(x, y) {
     for (let i = 0; i < this.COLS; i++) {
       let elem = this.tab[0][i];
@@ -235,6 +310,9 @@ class Table {
     }
   }
 
+  /**
+   * Funcion para dar comienzo al Juego
+   */
   play(col) {
     let ok = this.insertCoin(col);
 
@@ -246,7 +324,6 @@ class Table {
       this.winner = true;
       stop();
       this.alertWinner(this.playerTurn.getName(), true);
-      //TODO cambiar de color fichas ganadoras.
     } else if (!this.hasEmptyCell()) {
       stop();
       this.alertWinner("",false)
@@ -275,6 +352,11 @@ class Table {
     return col > -1 && col < this.COLS && this.tab[1][col].getId() == 0;
   }
 
+  /**
+   * Funcion para insertar una ficha en una columna 
+   * @param {*} col columna seleccionada
+   * @returns retorna true si inserto la ficha
+   */
   insertCoin(col) {
     if (!this.validateColumn(col)) return;
     let r = this.ROWS;
@@ -287,11 +369,17 @@ class Table {
     return true;
   }
 
+  /**
+   * @returns retorna si se formo una fila valida para ganar
+   */
   isWinner() {
     return this.horizontal() || this.vertical() || this.diagonales();
   }
 
-  horizontal(ok) {
+  /**
+   * @returns retorna si en encontro un resultado valido en horizontal
+   */
+  horizontal() {
     let cont = 1;
     let c = this.lastCol;
     let x = this.playerTurn.getId();
@@ -310,6 +398,9 @@ class Table {
     return cont >= this.numToWin;
   }
 
+  /**
+   * @returns si encontro un resultado valido de fichas verticalmente 
+   */
   vertical() {
     let cont = 1;
     let r = this.lastRow;
@@ -328,6 +419,9 @@ class Table {
     return cont >= this.numToWin;
   }
 
+  /**
+   * verifica si hay algun resultado valido en las diagonales a partir de la ultima ficha seleccionada
+   */
   diagonales() {
     return this.diagonalUp() || this.diagonalDown();
   }
@@ -388,7 +482,20 @@ class Table {
     return cont >= this.numToWin;
   }
 
-  //========================== Alerts y cambios de texto en pagina ==========================//
+  /**
+   * Cambiar turno del Jugador
+   */
+  changePlayerTurn() {
+    this.playerTurn = this.playerTurn.equals(this.p1) ? this.p2 : this.p1;
+    document.getElementById("turn_player").innerHTML =
+      this.playerTurn.getName();
+  }
+
+
+  //==================================== ALERT ======================================//
+  // Se utilizo la libreria sweetalert2 https://sweetalert2.github.io/#examples para
+  // la creaccion de alertas, ya que nos facilitaban su creaccion y no interferia en
+  // la logica del Juego pedido en el enunciado del TPE-2
 
   alertWinner(name, boolean) {
     let icon;
@@ -418,12 +525,4 @@ class Table {
       }
     });
   }
-
-  changePlayerTurn() {
-    this.playerTurn = this.playerTurn.equals(this.p1) ? this.p2 : this.p1;
-    document.getElementById("turn_player").innerHTML =
-      this.playerTurn.getName();
-  }
-
-
 }

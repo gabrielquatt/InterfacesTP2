@@ -7,10 +7,16 @@ class Coin extends Figure {
     this.free = true;
   }
 
+  /**
+   * @returns retorna el radio de la moneda 
+   */
   size() {
     return this.radio;
   }
 
+  /**
+   * @returns retorna el id del jugador que tiene el jugador
+   */
   getIdPlayer(){
     return this.id_player;
   }
@@ -29,6 +35,4 @@ class Coin extends Figure {
     this.draw();
     this.free = false;
   }
-
-  
 }
